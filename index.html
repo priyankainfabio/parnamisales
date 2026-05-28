@@ -64,7 +64,7 @@ nav.scrolled{background:rgba(6,6,6,.88);backdrop-filter:blur(22px);padding:16px 
 #hero-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center}
 
 /* BG image layers */
-.hero-bg-img{position:absolute;inset:0;background-image:url('/hero.jpg');background-size:cover;background-position:center;transform:scale(1.08);transition:transform .1s linear;will-change:transform}
+.hero-bg-img{position:absolute;inset:0;background-image:url('hero.jpg');background-size:cover;background-position:center;transform:scale(1.08);transition:transform .1s linear;will-change:transform}
 .hero-bg-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,6,6,.72) 0%,rgba(6,6,6,.55) 40%,rgba(6,6,6,.85) 100%)}
 .hero-bg-overlay2{position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 50% 50%,transparent 50%,rgba(6,6,6,.6) 100%)}
 
@@ -96,7 +96,17 @@ nav.scrolled{background:rgba(6,6,6,.88);backdrop-filter:blur(22px);padding:16px 
 .fcard:hover{border-color:var(--red);box-shadow:0 0 18px var(--red-glow)}
 
 /* Hero center */
-#hero-center{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;text-align:center;width:100%}
+#hero-center{
+  position:absolute;
+  inset:0;
+  z-index:10;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  width:100%;
+  height:100%;
+}
 
 /* Hero image object — chrome faucet product shot */
 #hero-obj{width:320px;height:320px;position:relative;margin-bottom:50px;animation:objFloat 6s ease-in-out infinite;will-change:transform;filter:drop-shadow(0 40px 80px rgba(196,0,0,.3))}
@@ -607,7 +617,7 @@ footer{
 <!-- NAV -->
 <nav id="nav">
   <div class="nav-logo-wrap">
-  <img src="parnami-logo.png" alt="Parnami Sales" class="nav-logo-img">
+  <img src="Parnami-logo.png" alt="Parnami Sales" class="nav-logo-img">
 </div>
   <ul class="nav-links">
     <li><a href="#categories">Collections</a></li>
@@ -1157,8 +1167,10 @@ function updateHero(){
   const scale=1+p*.32;
   const rotY=p*14;
   const rotX=-p*6;
-  heroObj.style.transform=`scale(${scale}) rotateY(${rotY}deg) rotateX(${rotX}deg)`;
-  heroObj.style.opacity=p>.88?(1-(p-.88)/.12):1;
+  if(heroObj){
+    heroObj.style.transform=`scale(${scale}) rotateY(${rotY}deg) rotateX(${rotX}deg)`;
+    heroObj.style.opacity=p>.88?(1-(p-.88)/.12):1;
+  }
 
   // Bg image parallax — slow zoom + slight move
   heroBgImg.style.transform=`scale(${1.08+p*.08}) translateY(${p*30}px)`;
