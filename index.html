@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parnami Sales — Luxury Bathroom & Architectural Experience</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #060606;
+  --red: #C40000;
+  --red-glow: rgba(196,0,0,0.4);
+  --silver: #B8BCC4;
+  --white: #F5F5F5;
+  --graphite: #1A1A1A;
+  --glass-border: rgba(184,188,196,0.12);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--white);font-family:'Inter',sans-serif;overflow-x:hidden;cursor:none}
+::selection{background:var(--red);color:#fff}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--black)}
+::-webkit-scrollbar-thumb{background:var(--red)}
+
+/* CURSOR */
+#cur{position:fixed;width:10px;height:10px;background:var(--red);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width .18s,height .18s}
+#cur-r{position:fixed;width:34px;height:34px;border:1px solid rgba(184,188,196,.45);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s}
+
+/* NOISE */
+.noise{position:fixed;inset:0;z-index:9997;pointer-events:none;opacity:.032;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:128px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:9990;padding:26px 60px;display:flex;align-items:center;justify-content:space-between;transition:background .5s,padding .5s,backdrop-filter .5s}
+nav.scrolled{background:rgba(6,6,6,.88);backdrop-filter:blur(22px);padding:16px 60px;border-bottom:1px solid var(--glass-border)}
+.nav-logo-wrap{
+  display:flex;
+  align-items:center;
+}
+
+.nav-logo-img{
+  width:220px;
+  height:auto;
+  object-fit:contain;
+  filter:
+    drop-shadow(0 0 12px rgba(196,0,0,.18))
+    brightness(1.05);
+  transition:transform .4s ease;
+}
+
+.nav-logo-img:hover{
+  transform:scale(1.02);
+}.nav-links{display:flex;gap:38px;list-style:none}
+.nav-links a{color:var(--silver);text-decoration:none;font-size:10px;letter-spacing:3px;text-transform:uppercase;transition:color .3s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.23,1,.32,1)}
+.nav-links a:hover{color:#fff}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-cta{background:transparent;border:1px solid var(--red);color:var(--red);padding:11px 26px;font-size:9px;letter-spacing:4px;text-transform:uppercase;cursor:none;transition:all .32s;font-family:'Inter',sans-serif}
+.nav-cta:hover{background:var(--red);color:#fff;box-shadow:0 0 28px var(--red-glow)}
+
+/* ── HERO ── */
+#hero-wrap{height:500vh;position:relative}
+#hero-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center}
+
+/* BG image layers */
+.hero-bg-img{position:absolute;inset:0;background-image:url('/hero.jpg');background-size:cover;background-position:center;transform:scale(1.08);transition:transform .1s linear;will-change:transform}
+.hero-bg-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,6,6,.72) 0%,rgba(6,6,6,.55) 40%,rgba(6,6,6,.85) 100%)}
+.hero-bg-overlay2{position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 50% 50%,transparent 50%,rgba(6,6,6,.6) 100%)}
+
+/* Moving red spotlight */
+.spotlight{position:absolute;pointer-events:none;width:700px;height:700px;background:radial-gradient(circle,rgba(196,0,0,.14) 0%,transparent 68%);border-radius:50%;transform:translate(-50%,-50%);left:50%;top:50%}
+
+/* Grid */
+.hero-grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(184,188,196,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(184,188,196,.025) 1px,transparent 1px);background-size:80px 80px}
+
+/* Particles */
+.particles{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.particle{position:absolute;border-radius:50%;background:rgba(184,188,196,.5);animation:floatP linear infinite}
+@keyframes floatP{0%{transform:translateY(100vh) translateX(0);opacity:0}10%{opacity:.5}90%{opacity:.25}100%{transform:translateY(-20px) translateX(var(--drift));opacity:0}}
+
+/* Corners */
+.c{position:absolute;width:56px;height:56px;pointer-events:none}
+.c-tl{top:78px;left:58px;border-top:1px solid var(--red);border-left:1px solid var(--red)}
+.c-tr{top:78px;right:58px;border-top:1px solid var(--red);border-right:1px solid var(--red)}
+.c-bl{bottom:58px;left:58px;border-bottom:1px solid var(--red);border-left:1px solid var(--red)}
+.c-br{bottom:58px;right:58px;border-bottom:1px solid var(--red);border-right:1px solid var(--red)}
+
+/* Progress */
+.hero-prog{position:absolute;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--red),#ff4040);box-shadow:0 0 10px var(--red-glow);z-index:50;transition:width .08s}
+
+/* Floating cards */
+.floating-cards{position:absolute;inset:0;pointer-events:none;z-index:15}
+.fcard{position:absolute;opacity:0;background:rgba(255,255,255,.03);border:1px solid var(--glass-border);backdrop-filter:blur(12px);padding:9px 18px;font-size:9px;letter-spacing:3px;color:var(--silver);text-transform:uppercase;white-space:nowrap;transform:translateY(28px);transition:opacity .7s,transform .7s,border-color .3s,box-shadow .3s}
+.fcard.vis{opacity:1;transform:translateY(0)}
+.fcard:hover{border-color:var(--red);box-shadow:0 0 18px var(--red-glow)}
+
+/* Hero center */
+#hero-center{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;text-align:center;width:100%}
+
+/* Hero image object — chrome faucet product shot */
+#hero-obj{width:320px;height:320px;position:relative;margin-bottom:50px;animation:objFloat 6s ease-in-out infinite;will-change:transform;filter:drop-shadow(0 40px 80px rgba(196,0,0,.3))}
+#hero-obj img{width:100%;height:100%;object-fit:contain;border-radius:0}
+@keyframes objFloat{0%,100%{transform:translateY(0) rotateY(0deg)}50%{transform:translateY(-16px) rotateY(5deg)}}
+
+/* Text sequence */
+.hero-seq{position:absolute;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:0 40px}
+.sf{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;opacity:0;pointer-events:none}
+.sf.active{opacity:1}
+.seq-label{font-size:9px;letter-spacing:6px;color:var(--red);text-transform:uppercase;font-weight:500}
+.seq-hl{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,8vw,118px);line-height:.93;letter-spacing:2px;color:#fff;text-shadow:0 2px 60px rgba(0,0,0,.8)}
+.seq-hl span{color:var(--red)}
+.seq-sub{font-size:12px;letter-spacing:4px;color:var(--silver);text-transform:uppercase;font-weight:300}
+
+/* Scroll hint */
+.scroll-hint{position:absolute;bottom:48px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;z-index:30;transition:opacity .4s}
+.scroll-hint-t{font-size:8px;letter-spacing:5px;color:var(--silver);text-transform:uppercase}
+.scroll-line{width:1px;height:56px;background:linear-gradient(var(--red),transparent);animation:sl 2s ease-in-out infinite}
+@keyframes sl{0%{transform:scaleY(0);transform-origin:top;opacity:1}50%{transform:scaleY(1);opacity:1}100%{transform:scaleY(1);opacity:0}}
+
+/* ── CATEGORIES ── */
+#categories{padding:130px 60px;position:relative}
+#categories::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--red),transparent)}
+.sec-label{font-size:9px;letter-spacing:7px;color:var(--red);text-transform:uppercase;margin-bottom:18px}
+.sec-hl{font-family:'Bebas Neue',sans-serif;font-size:clamp(46px,6vw,86px);line-height:.93;letter-spacing:2px;color:#fff;margin-bottom:70px;max-width:680px}
+.lux-line{width:56px;height:1px;background:var(--red);margin-bottom:14px;display:block;box-shadow:0 0 8px var(--red-glow)}
+
+.cat-grid{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:340px 240px;gap:14px}
+.cat-card{position:relative;overflow:hidden;cursor:none;transition:transform .5s cubic-bezier(.23,1,.32,1)}
+.cat-card:hover{transform:scale(.988)}
+.cat-card:nth-child(1){grid-row:1/3}
+/* Real image backgrounds */
+.cat-img{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .8s cubic-bezier(.23,1,.32,1),filter .6s}
+.cat-card:hover .cat-img{transform:scale(1.06);filter:brightness(.75)}
+.cat-overlay{position:absolute;inset:0;background:linear-gradient(transparent 30%,rgba(6,6,6,.95) 100%)}
+.cat-overlay2{position:absolute;inset:0;background:rgba(6,6,6,.35)}
+.cat-content{position:absolute;bottom:0;left:0;right:0;padding:28px 30px}
+.cat-tag{font-size:8px;letter-spacing:5px;color:var(--red);text-transform:uppercase;margin-bottom:7px}
+.cat-title{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:3px;color:#fff;transition:letter-spacing .4s}
+.cat-desc{font-size:12px;color:var(--silver);margin-top:5px;line-height:1.6;font-weight:300}
+.cat-card:hover .cat-title{letter-spacing:5px}
+.cat-border{position:absolute;inset:0;pointer-events:none;border:1px solid transparent;transition:border-color .4s}
+.cat-card:hover .cat-border{border-color:rgba(196,0,0,.35)}
+
+/* ── BRAND VIDEO + LOGO MARQUEE ── */
+#brands{
+  padding:120px 60px;
+  border-top:1px solid var(--glass-border);
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(196,0,0,.07), transparent 34%),
+    var(--black);
+}
+
+.brand-video-wrap{
+  display:grid;
+  grid-template-columns:.85fr 1.15fr;
+  gap:60px;
+  align-items:center;
+}
+
+.brand-video-left .sec-hl{
+  margin-bottom:0;
+}
+
+.brand-video-box{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  border:1px solid var(--glass-border);
+  overflow:hidden;
+  background:#000;
+  box-shadow:0 30px 90px rgba(0,0,0,.18);
+}
+
+.brand-video-box iframe{
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+.brand-logo-marquee{
+  margin-top:80px;
+  overflow:hidden;
+  border-top:1px solid var(--glass-border);
+  border-bottom:1px solid var(--glass-border);
+  background:#fff;
+  padding: 18px 0;
+}
+
+.brand-logo-track{
+  display:flex;
+  align-items:center;
+  gap:0;
+  width:max-content;
+  animation:brandLogoMove 24s linear infinite;
+}
+
+.brand-logo-track img{
+  height:85px;
+  width:auto;
+  max-width:160px;
+  object-fit:contain;
+  padding:0 42px;
+  opacity:.9;
+  filter:none;
+  mix-blend-mode:multiply;
+  transition:all .35s ease;
+}
+
+.brand-logo-track img:hover{
+  transform:scale(1.06);
+  opacity:1;
+}
+
+@keyframes brandLogoMove{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+/* ── SHOWCASE ── */
+#showcase{position:relative}
+.showcase-item{display:grid;grid-template-columns:1fr 1fr;min-height:90vh;position:relative}
+.showcase-item:nth-child(even){direction:rtl}
+.showcase-item:nth-child(even)>*{direction:ltr}
+.showcase-visual{position:relative;overflow:hidden;background:#0a0a0a}
+.showcase-img{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .8s cubic-bezier(.23,1,.32,1)}
+.showcase-item:hover .showcase-img{transform:scale(1.04)}
+.showcase-img-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,6,6,.0) 0%,rgba(6,6,6,.45) 100%)}
+.showcase-item:nth-child(even) .showcase-img-overlay{background:linear-gradient(90deg,rgba(6,6,6,.45) 0%,rgba(6,6,6,.0) 100%)}
+.showcase-content{padding:90px 72px;display:flex;flex-direction:column;justify-content:center;background:var(--black);border-top:1px solid var(--glass-border)}
+.showcase-num{font-family:'Bebas Neue',sans-serif;font-size:110px;line-height:1;color:rgba(184,188,196,.05);margin-bottom:-28px;display:block}
+.showcase-tag{font-size:8px;letter-spacing:7px;color:var(--red);text-transform:uppercase;margin-bottom:14px}
+.showcase-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(38px,4vw,64px);line-height:.93;letter-spacing:2px;color:#fff;margin-bottom:22px}
+.showcase-text{font-size:13px;color:var(--silver);line-height:1.85;font-weight:300;max-width:400px;margin-bottom:36px}
+.btn-lux{display:inline-flex;align-items:center;gap:14px;border:1px solid var(--red);color:var(--red);padding:14px 32px;font-size:9px;letter-spacing:4px;text-transform:uppercase;text-decoration:none;transition:all .32s;cursor:none;align-self:flex-start}
+.btn-lux:hover{background:var(--red);color:#fff;box-shadow:0 0 36px var(--red-glow)}
+.btn-lux::after{content:'→';transition:transform .3s}
+.btn-lux:hover::after{transform:translateX(6px)}
+
+/* ── WHY ── */
+#why{padding:150px 60px;position:relative;background:linear-gradient(180deg,var(--black) 0%,#090909 100%);border-top:1px solid var(--glass-border)}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;margin-top:72px;align-items:center}
+.why-stats{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.stat-card{background:var(--graphite);padding:44px 36px;position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--red)}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:68px;line-height:1;color:#fff;display:block}
+.stat-u{color:var(--red);font-size:38px}
+.stat-label{font-size:9px;letter-spacing:4px;color:var(--silver);text-transform:uppercase;margin-top:7px;display:block}
+.why-lead{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,2.2vw,30px);color:#fff;line-height:1.55;font-weight:300;font-style:italic;margin-bottom:28px}
+.why-points{list-style:none;margin-top:36px;display:flex;flex-direction:column;gap:18px}
+.why-pt{display:flex;align-items:flex-start;gap:18px;padding-bottom:18px;border-bottom:1px solid var(--glass-border)}
+.why-pt:last-child{border-bottom:none}
+.why-dot{width:5px;height:5px;border-radius:50%;background:var(--red);flex-shrink:0;margin-top:7px;box-shadow:0 0 8px var(--red-glow)}
+.why-pt-text{font-size:13px;color:var(--silver);line-height:1.75}
+.why-pt-text strong{color:#fff;font-weight:500}
+
+/* ── EXPERIENCE ── */
+#experience{border-top:1px solid var(--glass-border);position:relative;overflow:hidden}
+.exp-grid{display:grid;grid-template-columns:1fr 1fr;min-height:75vh}
+.exp-visual{position:relative;overflow:hidden}
+.exp-img{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .8s cubic-bezier(.23,1,.32,1)}
+#experience:hover .exp-img{transform:scale(1.04)}
+.exp-img-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,6,6,0) 0%,rgba(6,6,6,.5) 100%)}
+.exp-content{padding:90px 72px;display:flex;flex-direction:column;justify-content:center;background:var(--black)}
+.exp-tag{font-size:8px;letter-spacing:7px;color:var(--red);text-transform:uppercase;margin-bottom:18px}
+.exp-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,4.5vw,72px);line-height:.93;letter-spacing:2px;color:#fff;margin-bottom:22px}
+.exp-text{font-size:13px;color:var(--silver);line-height:1.85;font-weight:300;max-width:440px;margin-bottom:40px}
+.exp-feats{display:flex;flex-direction:column;gap:14px;margin-bottom:42px}
+.exp-feat{display:flex;align-items:center;gap:14px;font-size:11px;letter-spacing:2px;color:var(--silver);text-transform:uppercase}
+.exp-line{width:36px;height:1px;background:var(--red);flex-shrink:0}
+
+/* ── GALLERY STRIP — KOHLER STYLE BESTSELLER SCROLL ── */
+#gallery{
+  position:relative;
+  height:320vh;
+  border-top:1px solid var(--glass-border);
+  overflow:visible;
+  background:var(--black);
+}
+.gallery-sticky{
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow:hidden;
+  padding:96px 60px 70px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+.gallery-head{
+  position:relative;
+  z-index:5;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:40px;
+}
+.gallery-head .sec-hl{margin-bottom:0}
+.gallery-kicker{
+  max-width:360px;
+  font-size:13px;
+  line-height:1.8;
+  color:var(--silver);
+  font-weight:300;
+}
+.gallery-window{
+  position:relative;
+  width:100vw;
+  margin-left:-60px;
+  overflow:hidden;
+  padding:0 60px 10px;
+}
+.gallery-track{
+  display:flex;
+  align-items:stretch;
+  gap:28px;
+  width:max-content;
+  will-change:transform;
+  transition:transform .08s linear;
+}
+.gallery-item{
+  position:relative;
+  overflow:hidden;
+  cursor:none;
+  min-width:360px;
+  height:520px;
+  border:1px solid var(--glass-border);
+  background:rgba(255,255,255,.02);
+}
+.gallery-item:nth-child(even){margin-top:46px}
+.gallery-item img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform .7s cubic-bezier(.23,1,.32,1),filter .5s;
+}
+.gallery-item:hover img{transform:scale(1.07);filter:brightness(.78)}
+.gallery-item-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(6,6,6,.05) 0%,rgba(6,6,6,.18) 42%,rgba(6,6,6,.92) 100%);
+  opacity:1;
+  transition:opacity .4s;
+}
+.gallery-item-label{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  padding:26px 24px;
+  transform:none;
+  opacity:1;
+}
+.gallery-item-label span{
+  display:block;
+  font-size:9px;
+  letter-spacing:4px;
+  color:var(--red);
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+.gallery-item-label strong{
+  display:block;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:34px;
+  line-height:.95;
+  letter-spacing:2px;
+  color:#fff;
+  font-weight:400;
+}
+.gallery-progress{
+  position:absolute;
+  left:60px;
+  right:60px;
+  bottom:42px;
+  height:1px;
+  background:rgba(184,188,196,.16);
+}
+.gallery-progress span{
+  display:block;
+  height:100%;
+  width:0%;
+  background:var(--red);
+  box-shadow:0 0 12px var(--red-glow);
+  transition:width .08s linear;
+}
+
+/* ── SERVICES ── */
+#services{padding:130px 60px;border-top:1px solid var(--glass-border)}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:72px}
+.svc-card{background:var(--graphite);padding:56px 44px;position:relative;overflow:hidden;transition:transform .4s;cursor:none}
+.svc-card:hover{transform:translateY(-4px)}
+.svc-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.23,1,.32,1)}
+.svc-card:hover::before{transform:scaleX(1)}
+.svc-icon{width:52px;height:52px;margin-bottom:28px;border:1px solid var(--glass-border);display:flex;align-items:center;justify-content:center;transition:border-color .4s}
+.svc-card:hover .svc-icon{border-color:var(--red)}
+.svc-num{position:absolute;top:44px;right:44px;font-family:'Bebas Neue',sans-serif;font-size:44px;color:rgba(184,188,196,.055)}
+.svc-title{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;color:#fff;margin-bottom:14px}
+.svc-text{font-size:13px;color:var(--silver);line-height:1.8;font-weight:300}
+
+/* ── TESTIMONIALS ── */
+#testimonials{padding:130px 60px;border-top:1px solid var(--glass-border);position:relative;overflow:hidden}
+#testimonials::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(196,0,0,.045) 0%,transparent 70%);pointer-events:none}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:72px}
+.testi-card{background:rgba(255,255,255,.02);border:1px solid var(--glass-border);backdrop-filter:blur(8px);padding:44px 36px;transition:border-color .4s,transform .4s;cursor:none}
+.testi-card:hover{border-color:rgba(196,0,0,.25);transform:translateY(-4px)}
+.testi-q{font-size:46px;color:var(--red);line-height:1;font-family:'Cormorant Garamond',serif;margin-bottom:18px;opacity:.55}
+.stars{color:var(--red);font-size:11px;margin-bottom:16px;letter-spacing:2px}
+.testi-text{font-family:'Cormorant Garamond',serif;font-size:16px;color:#fff;line-height:1.75;font-style:italic;margin-bottom:28px;font-weight:300}
+.testi-div{width:36px;height:1px;background:var(--red);margin-bottom:20px}
+.testi-author{font-size:10px;letter-spacing:3px;color:var(--silver);text-transform:uppercase}
+.testi-role{font-size:9px;color:rgba(184,188,196,.45);margin-top:4px}
+
+/* ── FOOTER ── */
+footer{background:var(--graphite);border-top:1px solid var(--glass-border);padding:72px 60px 36px}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:52px;padding-bottom:52px;border-bottom:1px solid var(--glass-border)}
+.footer-logo-t{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:5px;color:#fff}
+.footer-tagline{font-size:10px;letter-spacing:4px;color:var(--silver);text-transform:uppercase;margin-top:5px;font-weight:300}
+.footer-desc{font-size:12px;color:rgba(184,188,196,.55);line-height:1.75;margin-top:22px;font-weight:300}
+.footer-social{display:flex;gap:10px;margin-top:28px}
+.soc-btn{width:36px;height:36px;border:1px solid var(--glass-border);display:flex;align-items:center;justify-content:center;color:var(--silver);text-decoration:none;font-size:11px;transition:all .3s;cursor:none}
+.soc-btn:hover{border-color:var(--red);color:var(--red);box-shadow:0 0 10px var(--red-glow)}
+.fc-title{font-size:9px;letter-spacing:5px;text-transform:uppercase;color:#fff;margin-bottom:22px;font-weight:500}
+.fc-links{list-style:none;display:flex;flex-direction:column;gap:11px}
+.fc-links a{font-size:12px;color:rgba(184,188,196,.55);text-decoration:none;transition:color .3s;font-weight:300}
+.fc-links a:hover{color:var(--red)}
+.footer-bot{padding-top:28px;display:flex;justify-content:space-between;align-items:center}
+.footer-copy{font-size:10px;color:rgba(184,188,196,.38);letter-spacing:2px}
+.footer-badge{font-size:8px;letter-spacing:4px;color:var(--red);text-transform:uppercase;border:1px solid rgba(196,0,0,.3);padding:7px 18px}
+.site-credit{display:flex;justify-content:flex-end;align-items:center}
+.site-credit-inner{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid rgba(255,255,255,.20);background:rgba(255,255,255,.05);border-radius:8px;padding:8px 12px;transition:background .3s ease,border-color .3s ease}
+.site-credit-inner:hover{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.28)}
+.site-credit-inner a{display:flex;align-items:center;opacity:.9;transition:opacity .3s ease}
+.site-credit-inner a:hover{opacity:1}
+.site-credit-inner img{height:12px;width:auto;display:block}
+.site-credit-divider{width:1px;height:12px;background:rgba(255,255,255,.30);display:block}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(44px);transition:opacity .9s cubic-bezier(.23,1,.32,1),transform .9s cubic-bezier(.23,1,.32,1)}
+.reveal.vis{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+/* ── LIGHT THEME OVERRIDES — only theme + hero shower placement changed ── */
+:root{
+  --black:#F6F2EA;
+  --red:#C40000;
+  --red-glow:rgba(196,0,0,0.22);
+  --silver:#5E6065;
+  --white:#111111;
+  --graphite:#FFFFFF;
+  --glass-border:rgba(18,18,18,0.12);
+}
+
+body{
+  background:#F6F2EA;
+  color:#111111;
+}
+
+::-webkit-scrollbar-track{background:#F6F2EA}
+
+.noise{opacity:.045;mix-blend-mode:multiply}
+
+nav{
+  background:rgba(246,242,234,.76);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(18,18,18,.08);
+}
+
+nav.scrolled{
+  background:rgba(255,255,255,.88);
+  border-bottom:1px solid rgba(18,18,18,.12);
+}
+
+.nav-links a{color:#303030}
+.nav-links a:hover{color:#000}
+.nav-cta{
+  color:var(--red);
+  background:rgba(255,255,255,.42);
+}
+.nav-cta:hover{color:#fff}
+
+/* Hero kept cinematic but converted to premium light showroom */
+.hero-bg-overlay{
+  background:
+    linear-gradient(180deg,rgba(246,242,234,.72) 0%,rgba(246,242,234,.45) 42%,rgba(246,242,234,.86) 100%);
+}
+.hero-bg-overlay2{
+  background:
+    radial-gradient(ellipse 70% 70% at 50% 50%,rgba(255,255,255,.08) 0%,rgba(246,242,234,.42) 100%);
+}
+.hero-grid{
+  background-image:
+    linear-gradient(rgba(18,18,18,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(18,18,18,.035) 1px,transparent 1px);
+}
+.particle{background:rgba(20,20,20,.35)}
+.fcard{
+  background:rgba(255,255,255,.44);
+  color:#222;
+  border-color:rgba(18,18,18,.12);
+  box-shadow:0 18px 50px rgba(0,0,0,.08);
+}
+
+/* Shower image sits behind the headline like a luxury product focus */
+#hero-obj{
+  width:430px;
+  height:520px;
+  margin-bottom:0;
+  z-index:18;
+  opacity:.92;
+  filter:
+    drop-shadow(0 34px 70px rgba(0,0,0,.22))
+    drop-shadow(0 0 46px rgba(196,0,0,.18));
+}
+#hero-obj img{
+  object-fit:contain;
+}
+
+.seq-hl{
+  color:#111;
+  text-shadow:
+    0 2px 30px rgba(255,255,255,.78),
+    0 20px 70px rgba(0,0,0,.12);
+}
+.seq-sub,.scroll-hint-t{color:#444}
+#hero-sticky > div[style*="parnamisales.com"],
+#hero-sticky > div[style*="vertical-rl"]{color:#555!important}
+
+/* Section light conversion */
+#categories,#brands,#why,#services,#testimonials,#gallery{
+  background:#F6F2EA;
+}
+.sec-hl,.showcase-title,.exp-title,.svc-title,.footer-logo-t,.fc-title{
+  color:#111;
+}
+.showcase-content,.exp-content{
+  background:#F6F2EA;
+}
+.showcase-num,.svc-num{
+  color:rgba(0,0,0,.06);
+}
+.showcase-text,.exp-text,.svc-text,.why-pt-text,.cat-desc,.footer-desc,.fc-links a,.footer-copy{
+  color:rgba(17,17,17,.62);
+}
+.why-lead,.why-pt-text strong,.testi-text{
+  color:#111;
+}
+.stat-card,.svc-card,.testi-card,.brand-item{
+  background:rgba(255,255,255,.72);
+  border-color:rgba(18,18,18,.10);
+  box-shadow:0 22px 70px rgba(0,0,0,.04);
+}
+.stat-num{color:#111}
+.brand-name{color:#303030}
+.brand-item:hover .brand-name{color:#000}
+footer{
+  background:#EFEAE2;
+  border-top:1px solid rgba(18,18,18,.12);
+}
+.footer-top{
+  border-bottom:1px solid rgba(18,18,18,.12);
+}
+.soc-btn{
+  color:#333;
+  border-color:rgba(18,18,18,.14);
+}
+
+@media(max-width:900px){
+  nav{padding:18px 22px}
+  nav.scrolled{padding:12px 22px}
+  .nav-links{display:none}
+  .cat-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+  .cat-card:nth-child(1){grid-row:auto}
+  .showcase-item{grid-template-columns:1fr}
+  .showcase-item:nth-child(even){direction:ltr}
+  .showcase-visual{min-height:50vw}
+  .why-grid{grid-template-columns:1fr;gap:52px}
+  .exp-grid{grid-template-columns:1fr}
+  .services-grid,.testi-grid{grid-template-columns:1fr}
+  .gallery-item{min-width:72vw}
+  .footer-top{grid-template-columns:1fr 1fr}
+  #categories,#brands,#why,#testimonials,#services,#gallery{padding:72px 22px}
+  .showcase-content{padding:52px 22px}
+  .exp-content{padding:52px 22px}
+  footer{padding:52px 22px 28px}
+}
+
+@media(max-width:900px){
+  #gallery{height:auto;overflow:hidden}
+  .gallery-sticky{position:relative;height:auto;padding:72px 22px}
+  .gallery-head{display:block}
+  .gallery-kicker{margin-top:22px}
+  .gallery-window{width:100%;margin-left:0;padding:0;margin-top:46px;overflow-x:auto}
+  .gallery-track{transform:none!important;gap:14px}
+  .gallery-item{min-width:72vw;height:420px}
+  .gallery-progress{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="noise"></div>
+<div id="cur"></div>
+<div id="cur-r"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo-wrap">
+  <img src="parnami-logo.png" alt="Parnami Sales" class="nav-logo-img">
+</div>
+  <ul class="nav-links">
+    <li><a href="#categories">Collections</a></li>
+    <li><a href="#brands">Brands</a></li>
+    <li><a href="#showcase">Showcase</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#services">Services</a></li>
+  </ul>
+  <button class="nav-cta">Book Consultation</button>
+</nav>
+
+<!-- HERO -->
+<div id="hero-wrap">
+  <div id="hero-sticky">
+    <div class="hero-prog" id="hprog" style="width:0%"></div>
+
+    <!-- Moody showroom bg image -->
+    <div class="hero-bg-img" id="heroBgImg"></div>
+    <div class="hero-bg-overlay"></div>
+    <div class="hero-bg-overlay2"></div>
+    <div class="hero-grid"></div>
+    <div class="spotlight" id="spotlight"></div>
+    <div class="particles" id="particles"></div>
+
+    <div class="c c-tl"></div><div class="c c-tr"></div>
+    <div class="c c-bl"></div><div class="c c-br"></div>
+
+    <!-- Floating category pills -->
+    <div class="floating-cards" id="fcards">
+      <div class="fcard" style="top:20%;left:5%">Jaquar</div>
+      <div class="fcard" style="top:35%;right:7%">Kohler</div>
+      <div class="fcard" style="top:60%;left:6%">TOTO</div>
+      <div class="fcard" style="top:68%;right:8%">Wellness</div>
+      <div class="fcard" style="top:16%;right:20%">Premium Tiles</div>
+      <div class="fcard" style="top:76%;left:20%">UPVC</div>
+      <div class="fcard" style="top:53%;right:5%">Luxury Faucets</div>
+    </div>
+
+    <!-- Center -->
+    <div id="hero-center">
+      <!-- Product image — chrome faucet -->
+      <div id="hero-obj">
+        <img src="s.png" alt="luxury" style="width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 20px 60px rgba(196,0,0,.4)) brightness(1.05) contrast(1.1)">
+      </div>
+
+      <!-- Text sequence overlay -->
+      <div class="hero-seq" id="heroSeq">
+        <div class="sf active" data-f="0">
+          <span class="seq-label">Redefining Spaces</span>
+          <div class="seq-hl">Bathrooms Are No Longer<br>Utility Spaces</div>
+        </div>
+        <div class="sf" data-f="1">
+          <span class="seq-label">A New Philosophy</span>
+          <div class="seq-hl">They Are Personal<br><span>Luxury</span> Retreats</div>
+        </div>
+        <div class="sf" data-f="2">
+          <span class="seq-label">The Parnami Promise</span>
+          <div class="seq-hl">Premium Brands.<br>Expert Guidance.</div>
+          <div class="seq-sub">One Destination.</div>
+        </div>
+        <div class="sf" data-f="3">
+          <span class="seq-label">Crafted For You</span>
+          <div class="seq-hl">Designed For<br>Modern <span>Living.</span></div>
+        </div>
+        <div class="sf" data-f="4">
+          <span class="seq-label">Delhi's Finest</span>
+          <div class="seq-hl">Welcome To<br><span>Parnami</span></div>
+          <div class="seq-sub">Sales — Luxury Architectural Experience</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll hint -->
+    <div class="scroll-hint" id="scHint">
+      <span class="scroll-hint-t">Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+
+    <div style="position:absolute;left:58px;bottom:90px;z-index:30">
+      <div style="font-size:8px;letter-spacing:5px;color:rgba(184,188,196,.38);text-transform:uppercase">parnamisales.com</div>
+      <div style="font-size:8px;letter-spacing:3px;color:rgba(184,188,196,.28);margin-top:5px">New Delhi, India</div>
+    </div>
+    <div style="position:absolute;right:58px;bottom:90px;z-index:30;writing-mode:vertical-rl;font-size:8px;letter-spacing:5px;color:rgba(184,188,196,.28);text-transform:uppercase">
+      Luxury · Architecture · Wellness
+    </div>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<section id="categories">
+  <div class="reveal"><span class="lux-line"></span><div class="sec-label">Our Collections</div></div>
+  <div class="sec-hl reveal d1">Curated For<br>Exceptional Living</div>
+
+  <div class="cat-grid">
+    <!-- Large: luxury bathroom -->
+    <div class="cat-card reveal d1">
+      <div class="cat-img" style="background-image:url('hero.jpg')"></div>
+      <div class="cat-overlay2"></div><div class="cat-overlay"></div>
+      <div class="cat-content">
+        <div class="cat-tag">Featured</div>
+        <div class="cat-title">Luxury Sanitaryware</div>
+        <div class="cat-desc">Kohler, Jaquar, TOTO — premium bathroom collections for every aesthetic</div>
+      </div>
+      <div class="cat-border"></div>
+    </div>
+    <!-- Tiles -->
+    <div class="cat-card reveal d2">
+      <div class="cat-img" style="background-image:url('https://images.unsplash.com/photo-1615529328331-f8917597711f?w=600&q=85&auto=format&fit=crop')"></div>
+      <div class="cat-overlay2"></div><div class="cat-overlay"></div>
+      <div class="cat-content">
+        <div class="cat-tag">Architecture</div>
+        <div class="cat-title">Premium Tiles</div>
+        <div class="cat-desc">Large format, designer tiles for floors and walls</div>
+      </div>
+      <div class="cat-border"></div>
+    </div>
+    <!-- Faucets -->
+    <div class="cat-card reveal d3">
+      <div class="cat-img" style="background-image:url('https://images.unsplash.com/photo-1585704032915-c3400305e979?w=600&q=85&auto=format&fit=crop')"></div>
+      <div class="cat-overlay2"></div><div class="cat-overlay"></div>
+      <div class="cat-content">
+        <div class="cat-tag">Premium</div>
+        <div class="cat-title">Luxury Faucets</div>
+      </div>
+      <div class="cat-border"></div>
+    </div>
+    <!-- Bathtub / Wellness -->
+    <div class="cat-card reveal d2">
+      <div class="cat-img" style="background-image:url('https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=600&q=85&auto=format&fit=crop')"></div>
+      <div class="cat-overlay2"></div><div class="cat-overlay"></div>
+      <div class="cat-content">
+        <div class="cat-tag">Wellness</div>
+        <div class="cat-title">Bathtubs & Wellness</div>
+      </div>
+      <div class="cat-border"></div>
+    </div>
+    <!-- UPVC -->
+    <div class="cat-card reveal d3">
+      <div class="cat-img" style="background-image:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=85&auto=format&fit=crop')"></div>
+      <div class="cat-overlay2"></div><div class="cat-overlay"></div>
+      <div class="cat-content">
+        <div class="cat-tag">Doors & Windows</div>
+        <div class="cat-title">UPVC Systems</div>
+      </div>
+      <div class="cat-border"></div>
+    </div>
+  </div>
+</section>
+
+<!-- BRANDS / VIDEO -->
+<section id="brands" class="brand-video-section">
+  <div class="brand-video-wrap">
+
+    <div class="brand-video-left">
+      <span class="lux-line"></span>
+      <div class="sec-label">Authorized Dealer in Faridabad</div>
+      <div class="sec-hl">The luxury bathroom<br>you've been dreaming of</div>
+    </div>
+
+    <div class="brand-video-box">
+      <iframe
+  src="https://www.youtube.com/embed/tymKxZ0_AN4?autoplay=0&mute=1&rel=0&modestbranding=1"
+  title="Parnami Sales Video"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen>
+</iframe>
+    </div>
+
+  </div>
+
+  <div class="brand-logo-marquee">
+    <div class="brand-logo-track">
+      <img src="jaquar-logo.png" alt="Jaquar">
+      <img src="kohler-logo.png" alt="Kohler">
+      <img src="toto-logo.png" alt="TOTO">
+      <img src="fenesta-logo.png" alt="Fenesta">
+      <img src="grohe-logo.png" alt="Grohe">
+      <img src="cera-logo.png" alt="Cera">
+      <img src="kent.png" alt="kent">
+      <img src="roff.png" alt="roff">
+
+      <img src="jaquar-logo.png" alt="Jaquar">
+      <img src="kohler-logo.png" alt="Kohler">
+      <img src="toto-logo.png" alt="TOTO">
+      <img src="fenesta-logo.png" alt="Fenesta">
+      <img src="grohe-logo.png" alt="Grohe">
+      <img src="cera-logo.png" alt="Cera">
+      <img src="kent.png" alt="kent">
+      <img src="roff.png" alt="roff">
+    </div>
+  </div>
+</section>
+
+<!-- SHOWCASE -->
+<section id="showcase">
+  <!-- 1: Bathroom interior -->
+  <div class="showcase-item">
+    <div class="showcase-visual">
+      <div class="showcase-img" style="background-image:url('https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=900&q=85&auto=format&fit=crop')"></div>
+      <div class="showcase-img-overlay"></div>
+    </div>
+    <div class="showcase-content reveal">
+      <span class="showcase-num">01</span>
+      <div class="showcase-tag">Architectural Design</div>
+      <div class="showcase-title">Spaces That<br>Transcend the<br>Ordinary</div>
+      <div class="showcase-text">We believe bathrooms are the most personal spaces in a home. That's why we curate collections that marry form, function, and luxury — from freestanding bathtubs to smart showers and handcrafted fixtures.</div>
+      <a href="https://parnamisales.com/" class="btn-lux">Explore Collection</a>
+    </div>
+  </div>
+
+  <!-- 2: Tiles -->
+  <div class="showcase-item">
+    <div class="showcase-visual">
+      <div class="showcase-img" style="background-image:url('https://images.unsplash.com/photo-1615529328331-f8917597711f?w=900&q=85&auto=format&fit=crop')"></div>
+      <div class="showcase-img-overlay"></div>
+    </div>
+    <div class="showcase-content reveal">
+      <span class="showcase-num">02</span>
+      <div class="showcase-tag">Surface Excellence</div>
+      <div class="showcase-title">Tiles That<br>Define Space<br>& Character</div>
+      <div class="showcase-text">From Italian marble-look porcelain to Japanese ceramic art, our tile collections transform surfaces into statements. Large format, bespoke designs for floors, walls, and facades.</div>
+      <a href="https://parnamisales.com/" class="btn-lux">View Tiles</a>
+    </div>
+  </div>
+
+  <!-- 3: Shower / Wellness -->
+  <div class="showcase-item">
+    <div class="showcase-visual">
+      <div class="showcase-img" style="background-image:url('https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=900&q=85&auto=format&fit=crop')"></div>
+      <div class="showcase-img-overlay"></div>
+    </div>
+    <div class="showcase-content reveal">
+      <span class="showcase-num">03</span>
+      <div class="showcase-tag">Wellness</div>
+      <div class="showcase-title">Showers<br>Reimagined<br>For Life</div>
+      <div class="showcase-text">Rain showers, steam cabins, and chromotherapy systems — we bring the five-star spa experience directly into your private sanctuary. Precision-engineered wellness, delivered.</div>
+      <a href="https://parnamisales.com/" class="btn-lux">Wellness Range</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY PARNAMI -->
+<section id="why">
+  <div class="reveal"><span class="lux-line"></span><div class="sec-label">Our Distinction</div></div>
+  <div class="sec-hl reveal d1">Why Parnami<br>Is Different</div>
+  <div class="why-grid">
+    <div class="why-stats reveal">
+      <div class="stat-card">
+        <span class="stat-num">35<span class="stat-u">+</span></span>
+        <span class="stat-label">Years of Excellence</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">1.5<span class="stat-u">k</span></span>
+        <span class="stat-label">Happy Clients</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">2.5k<span class="stat-u">+</span></span>
+        <span class="stat-label">Products Sold</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">100<span class="stat-u">+</span></span>
+        <span class="stat-label">Trained Staff</span>
+      </div>
+    </div>
+    <div class="reveal d2">
+      <p class="why-lead">"Not just a showroom — an experience that redefines how you think about your home."</p>
+      <ul class="why-points">
+        <li class="why-pt"><div class="why-dot"></div><div class="why-pt-text"><strong>Curated Luxury Portfolio</strong> — Hand-selected brands including Kohler, Jaquar, TOTO and more, chosen for quality and design excellence.</div></li>
+        <li class="why-pt"><div class="why-dot"></div><div class="why-pt-text"><strong>Expert Design Consultation</strong> — Our specialist team guides you through material selection, spatial planning, and brand choices.</div></li>
+        <li class="why-pt"><div class="why-dot"></div><div class="why-pt-text"><strong>Architect & Designer Preferred</strong> — The go-to destination for Delhi's top interior designers and architectural studios.</div></li>
+        <li class="why-pt"><div class="why-dot"></div><div class="why-pt-text"><strong>Immersive Experience Center</strong> — Live installations, working shower demos, and luxury mock-up spaces to touch and experience.</div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE CENTER -->
+<section id="experience">
+  <div class="exp-grid">
+    <div class="exp-visual">
+      <div class="exp-img" style="background-image:url('https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=900&q=85&auto=format&fit=crop')"></div>
+      <div class="exp-img-overlay"></div>
+      <div style="position:absolute;bottom:36px;left:36px;font-size:8px;letter-spacing:5px;color:rgba(196,0,0,.7);text-transform:uppercase;z-index:2">Delhi Experience Center</div>
+    </div>
+    <div class="exp-content reveal">
+      <span class="lux-line"></span>
+      <div class="exp-tag">Visit Us</div>
+      <div class="exp-title">The Ultimate<br>Experience<br>Center</div>
+      <div class="exp-text">Step inside Delhi's most immersive luxury bathroom and architectural products showroom. Touch, experience, and discover premium products across a curated, cinematic space.</div>
+      <div class="exp-feats">
+        <div class="exp-feat"><div class="exp-line"></div>Live Shower Demonstrations</div>
+        <div class="exp-feat"><div class="exp-line"></div>Full Bathroom Mock-up Spaces</div>
+        <div class="exp-feat"><div class="exp-line"></div>Designer Consultation Suite</div>
+        <div class="exp-feat"><div class="exp-line"></div>Material & Finish Library</div>
+      </div>
+      <a href="https://parnamisales.com/" class="btn-lux">Plan Your Visit</a>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY STRIP -->
+<section id="gallery">
+  <div class="gallery-sticky">
+    <div class="gallery-head">
+      <div>
+        <div class="reveal"><span class="lux-line"></span><div class="sec-label">The Collection</div></div>
+        <div class="sec-hl reveal d1">A Visual<br>Journey</div>
+      </div>
+      <p class="gallery-kicker reveal d2">Scroll to explore a bestseller-style horizontal collection of luxury bath worlds, shower systems and premium surfaces.</p>
+    </div>
+
+    <div class="gallery-window">
+      <div class="gallery-track" id="galleryTrack">
+        <div class="gallery-item reveal d1">
+          <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=85&auto=format&fit=crop" alt="Luxury Bathroom">
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label"><span>Luxury Interiors</span><strong>Private Retreats</strong></div>
+        </div>
+        <div class="gallery-item reveal d2">
+          <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=85&auto=format&fit=crop" alt="Shower System">
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label"><span>Shower Systems</span><strong>Performance Showering</strong></div>
+        </div>
+        <div class="gallery-item reveal d3">
+          <img src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=800&q=85&auto=format&fit=crop" alt="Bathtub">
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label"><span>Wellness Baths</span><strong>Spa At Home</strong></div>
+        </div>
+        <div class="gallery-item reveal d4">
+          <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=85&auto=format&fit=crop" alt="Premium Faucet">
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label"><span>Premium Fittings</span><strong>Chrome Details</strong></div>
+        </div>
+        <div class="gallery-item reveal d1">
+          <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=800&q=85&auto=format&fit=crop" alt="Designer Bathroom">
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label"><span>Designer Bathrooms</span><strong>Modern Living</strong></div>
+        </div>
+        <div class="gallery-item reveal d2">
+          <img src="https://images.unsplash.com/photo-1615529328331-f8917597711f?w=800&q=85&auto=format&fit=crop" alt="Premium Tiles">
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label"><span>Premium Tiles</span><strong>Surface Stories</strong></div>
+        </div>
+        <div class="gallery-item reveal d3">
+          <img src="https://images.unsplash.com/photo-1620626011761-996317b8d101?w=800&q=85&auto=format&fit=crop" alt="Modern Vanity">
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label"><span>Modern Vanity</span><strong>Grooming Spaces</strong></div>
+        </div>
+        <div class="gallery-item reveal d4">
+          <img src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800&q=85&auto=format&fit=crop" alt="Showroom">
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label"><span>Experience Center</span><strong>Curated Displays</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-progress"><span id="galleryProgress"></span></div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="reveal"><span class="lux-line"></span><div class="sec-label">Design Services</div></div>
+  <div class="sec-hl reveal d1">Expert<br>Consultation</div>
+  <div class="services-grid">
+    <div class="svc-card reveal d1">
+      <span class="svc-num">01</span>
+      <div class="svc-icon">
+        <svg viewBox="0 0 28 28" fill="none" stroke="#B8BCC4" stroke-width="1.5" stroke-linecap="round">
+          <rect x="3" y="3" width="22" height="22" rx="2"/><line x1="3" y1="10" x2="25" y2="10"/><line x1="10" y1="10" x2="10" y2="25"/><circle cx="18" cy="18" r="3"/>
+        </svg>
+      </div>
+      <div class="svc-title">Space Planning</div>
+      <div class="svc-text">Expert layout consultation for bathrooms of any size, optimizing for flow, function, and aesthetics with our certified designers.</div>
+    </div>
+    <div class="svc-card reveal d2">
+      <span class="svc-num">02</span>
+      <div class="svc-icon">
+        <svg viewBox="0 0 28 28" fill="none" stroke="#B8BCC4" stroke-width="1.5" stroke-linecap="round">
+          <circle cx="14" cy="10" r="5"/><path d="M4 24 Q4 17 14 17 Q24 17 24 24"/>
+        </svg>
+      </div>
+      <div class="svc-title">Personal Consultation</div>
+      <div class="svc-text">One-on-one sessions with luxury brand specialists who understand your vision and translate it into curated product selections.</div>
+    </div>
+    <div class="svc-card reveal d3">
+      <span class="svc-num">03</span>
+      <div class="svc-icon">
+        <svg viewBox="0 0 28 28" fill="none" stroke="#B8BCC4" stroke-width="1.5" stroke-linecap="round">
+          <path d="M4 22 L4 6 L24 6 L24 22"/><line x1="4" y1="22" x2="24" y2="22"/><rect x="10" y="14" width="8" height="8"/><path d="M8 10 L14 10 L20 10"/>
+        </svg>
+      </div>
+      <div class="svc-title">Project Supply</div>
+      <div class="svc-text">Complete project fulfilment for residential and commercial developments — from a single bathroom to an entire hotel property.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="reveal"><span class="lux-line"></span><div class="sec-label">Client Stories</div></div>
+  <div class="sec-hl reveal d1">Trusted By<br>The Discerning</div>
+  <div class="testi-grid">
+    <div class="testi-card reveal d1">
+      <div class="testi-q">"</div>
+      <div class="stars">★★★★★</div>
+      <div class="testi-text">Walking into Parnami is an experience in itself. The curation is exceptional — I found pieces I couldn't find anywhere else in Delhi.</div>
+      <div class="testi-div"></div>
+      <div class="testi-author">Priya Sharma</div>
+      <div class="testi-role">Interior Architect, New Delhi</div>
+    </div>
+    <div class="testi-card reveal d2">
+      <div class="testi-q">"</div>
+      <div class="stars">★★★★★</div>
+      <div class="testi-text">For a luxury residential project, I needed only the finest. Parnami delivered on every level — quality, variety, and professional guidance.</div>
+      <div class="testi-div"></div>
+      <div class="testi-author">Rahul Mehta</div>
+      <div class="testi-role">Property Developer</div>
+    </div>
+    <div class="testi-card reveal d3">
+      <div class="testi-q">"</div>
+      <div class="stars">★★★★★</div>
+      <div class="testi-text">The Kohler and Jaquar collections at Parnami are presented beautifully. The consultants truly understand the difference between products.</div>
+      <div class="testi-div"></div>
+      <div class="testi-author">Ananya Kapoor</div>
+      <div class="testi-role">Design Studio Principal</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="reveal">
+      <div class="footer-logo-t">PARNAMI</div>
+      <div class="footer-tagline">Luxury Architectural Experience</div>
+      <div class="footer-desc">Delhi's premier destination for luxury sanitaryware, premium tiles, wellness solutions, and architectural products. Where design meets distinction.</div>
+      <div class="footer-social">
+        <a href="https://parnamisales.com/" class="soc-btn">in</a>
+        <a href="https://parnamisales.com/" class="soc-btn">ig</a>
+        <a href="https://parnamisales.com/" class="soc-btn">fb</a>
+        <a href="https://parnamisales.com/" class="soc-btn">yt</a>
+      </div>
+    </div>
+    <div class="reveal d1">
+      <div class="fc-title">Collections</div>
+      <ul class="fc-links">
+        <li><a href="#">Sanitaryware</a></li>
+        <li><a href="#">Luxury Faucets</a></li>
+        <li><a href="#">Premium Tiles</a></li>
+        <li><a href="#">Wellness</a></li>
+        <li><a href="#">UPVC Systems</a></li>
+        <li><a href="#">Accessories</a></li>
+      </ul>
+    </div>
+    <div class="reveal d2">
+      <div class="fc-title">Brands</div>
+      <ul class="fc-links">
+        <li><a href="#">Jaquar</a></li>
+        <li><a href="#">Kohler</a></li>
+        <li><a href="#">TOTO</a></li>
+        <li><a href="#">Grohe</a></li>
+        <li><a href="#">Hansgrohe</a></li>
+        <li><a href="#">Roca</a></li>
+      </ul>
+    </div>
+    <div class="reveal d3">
+      <div class="fc-title">Contact</div>
+      <ul class="fc-links">
+        <li><a href="https://parnamisales.com/">parnamisales.com</a></li>
+        <li><a href="#">New Delhi, India</a></li>
+        <li><a href="#">Book a Visit</a></li>
+        <li><a href="#">Design Consultation</a></li>
+        <li><a href="#">Trade Enquiries</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bot">
+    <div class="footer-copy">© 2025 Parnami Sales. All rights reserved.</div>
+    <div class="site-credit">
+      <div class="site-credit-inner">
+        <a href="https://fabulousmedia.in/" target="_blank" rel="noopener noreferrer" aria-label="FabulousMedia">
+          <img src="fabulous-logo.png" alt="FabulousMedia">
+        </a>
+        <span class="site-credit-divider"></span>
+        <a href="https://gocommercially.com/" target="_blank" rel="noopener noreferrer" aria-label="GoCommercially">
+          <img src="gocommercially-logo.png" alt="GoCommercially">
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── CURSOR
+const cur=document.getElementById('cur'),curR=document.getElementById('cur-r');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cur.style.left=mx+'px';cur.style.top=my+'px';
+});
+(function animR(){
+  rx+=(mx-rx)*.11;ry+=(my-ry)*.11;
+  curR.style.left=rx+'px';curR.style.top=ry+'px';
+  requestAnimationFrame(animR);
+})();
+document.querySelectorAll('a,button,.cat-card,.svc-card,.testi-card,.brand-item,.gallery-item').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='18px';cur.style.height='18px';curR.style.width='52px';curR.style.height='52px';curR.style.borderColor='rgba(196,0,0,.6)'});
+  el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';curR.style.width='34px';curR.style.height='34px';curR.style.borderColor='rgba(184,188,196,.45)'});
+});
+
+// ── NAV
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>60),{passive:true});
+
+// ── PARTICLES
+const pc=document.getElementById('particles');
+for(let i=0;i<24;i++){
+  const p=document.createElement('div');p.className='particle';
+  const s=Math.random()*1.8+.8;
+  p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;bottom:0;--drift:${(Math.random()-.5)*110}px;animation-duration:${9+Math.random()*11}s;animation-delay:${-Math.random()*20}s`;
+  pc.appendChild(p);
+}
+
+// ── HERO SCROLL
+const heroWrap=document.getElementById('hero-wrap');
+const hprog=document.getElementById('hprog');
+const heroObj=document.getElementById('hero-obj');
+const scHint=document.getElementById('scHint');
+const fcards=document.querySelectorAll('.fcard');
+const frames=document.querySelectorAll('.sf');
+const heroBgImg=document.getElementById('heroBgImg');
+
+function updateHero(){
+  const rect=heroWrap.getBoundingClientRect();
+  const total=heroWrap.offsetHeight-innerHeight;
+  const scrolled=-rect.top;
+  const p=Math.max(0,Math.min(1,scrolled/total));
+
+  hprog.style.width=(p*100)+'%';
+  scHint.style.opacity=p>.04?0:1;
+
+  // Text frames
+  const fi=Math.min(frames.length-1,Math.floor(p*frames.length*1.1));
+  frames.forEach((f,i)=>f.classList.toggle('active',i===fi));
+
+  // Object 3D transform
+  const scale=1+p*.32;
+  const rotY=p*14;
+  const rotX=-p*6;
+  heroObj.style.transform=`scale(${scale}) rotateY(${rotY}deg) rotateX(${rotX}deg)`;
+  heroObj.style.opacity=p>.88?(1-(p-.88)/.12):1;
+
+  // Bg image parallax — slow zoom + slight move
+  heroBgImg.style.transform=`scale(${1.08+p*.08}) translateY(${p*30}px)`;
+
+  // Floating cards
+  fcards.forEach((c,i)=>{
+    const t=.18+i*.065;
+    c.classList.toggle('vis',p>t&&p<.88);
+  });
+}
+window.addEventListener('scroll',updateHero,{passive:true});
+updateHero();
+
+// ── SPOTLIGHT FOLLOW
+const sp=document.getElementById('spotlight');
+let spx=50,spy=50,tspx=50,tspy=50;
+document.addEventListener('mousemove',e=>{
+  if(scrollY<innerHeight){tspx=e.clientX/innerWidth*100;tspy=e.clientY/innerHeight*100}
+});
+(function animSp(){
+  spx+=(tspx-spx)*.035;spy+=(tspy-spy)*.035;
+  sp.style.left=spx+'%';sp.style.top=spy+'%';
+  requestAnimationFrame(animSp);
+})();
+
+// ── REVEAL
+const revEls=document.querySelectorAll('.reveal');
+new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')});
+},{threshold:.1}).observe.bind(new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')});
+},{threshold:.1}));
+
+// simpler approach:
+const ro=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')});
+},{threshold:.1});
+revEls.forEach(e=>ro.observe(e));
+
+// ── GALLERY KOHLER-STYLE PINNED HORIZONTAL SCROLL
+const gallery=document.getElementById('gallery');
+const galleryTrack=document.getElementById('galleryTrack');
+const galleryProgress=document.getElementById('galleryProgress');
+function updateGalleryMove(){
+  if(!gallery||!galleryTrack)return;
+  const r=gallery.getBoundingClientRect();
+  const maxScroll=gallery.offsetHeight-innerHeight;
+  const progress=Math.max(0,Math.min(1,-r.top/maxScroll));
+  const travel=Math.max(0,galleryTrack.scrollWidth-innerWidth+120);
+  galleryTrack.style.transform=`translateX(${-travel*progress}px)`;
+  if(galleryProgress)galleryProgress.style.width=(progress*100)+'%';
+}
+window.addEventListener('scroll',updateGalleryMove,{passive:true});
+window.addEventListener('resize',updateGalleryMove);
+updateGalleryMove();
+
+// ── SMOOTH ANCHOR LINKS
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t)t.scrollIntoView({behavior:'smooth'});
+  });
+});
+</script>
+</body>
+</html>
