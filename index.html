@@ -34,6 +34,7 @@ body{background:var(--black);color:var(--white);font-family:'Inter',sans-serif;o
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:9990;padding:26px 60px;display:flex;align-items:center;justify-content:space-between;transition:background .5s,padding .5s,backdrop-filter .5s}
 nav.scrolled{background:rgba(6,6,6,.88);backdrop-filter:blur(22px);padding:16px 60px;border-bottom:1px solid var(--glass-border)}
+nav.hero-hide{transform:translateY(-120%);opacity:0;pointer-events:none}
 .nav-logo-wrap{
   display:flex;
   align-items:center;
@@ -59,75 +60,211 @@ nav.scrolled{background:rgba(6,6,6,.88);backdrop-filter:blur(22px);padding:16px 
 .nav-cta{background:transparent;border:1px solid var(--red);color:var(--red);padding:11px 26px;font-size:9px;letter-spacing:4px;text-transform:uppercase;cursor:none;transition:all .32s;font-family:'Inter',sans-serif}
 .nav-cta:hover{background:var(--red);color:#fff;box-shadow:0 0 28px var(--red-glow)}
 
-/* ── HERO ── */
-#hero-wrap{height:500vh;position:relative}
-#hero-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center}
+/* ───────── HERO SCROLL CANVAS ───────── */
 
-/* BG image layers */
-.hero-bg-img{position:absolute;inset:0;background-image:url('hero.jpg');background-size:cover;background-position:center;transform:scale(1.08);transition:transform .1s linear;will-change:transform}
-.hero-bg-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,6,6,.72) 0%,rgba(6,6,6,.55) 40%,rgba(6,6,6,.85) 100%)}
-.hero-bg-overlay2{position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 50% 50%,transparent 50%,rgba(6,6,6,.6) 100%)}
-
-/* Moving red spotlight */
-.spotlight{position:absolute;pointer-events:none;width:700px;height:700px;background:radial-gradient(circle,rgba(196,0,0,.14) 0%,transparent 68%);border-radius:50%;transform:translate(-50%,-50%);left:50%;top:50%}
-
-/* Grid */
-.hero-grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(184,188,196,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(184,188,196,.025) 1px,transparent 1px);background-size:80px 80px}
-
-/* Particles */
-.particles{position:absolute;inset:0;overflow:hidden;pointer-events:none}
-.particle{position:absolute;border-radius:50%;background:rgba(184,188,196,.5);animation:floatP linear infinite}
-@keyframes floatP{0%{transform:translateY(100vh) translateX(0);opacity:0}10%{opacity:.5}90%{opacity:.25}100%{transform:translateY(-20px) translateX(var(--drift));opacity:0}}
-
-/* Corners */
-.c{position:absolute;width:56px;height:56px;pointer-events:none}
-.c-tl{top:78px;left:58px;border-top:1px solid var(--red);border-left:1px solid var(--red)}
-.c-tr{top:78px;right:58px;border-top:1px solid var(--red);border-right:1px solid var(--red)}
-.c-bl{bottom:58px;left:58px;border-bottom:1px solid var(--red);border-left:1px solid var(--red)}
-.c-br{bottom:58px;right:58px;border-bottom:1px solid var(--red);border-right:1px solid var(--red)}
-
-/* Progress */
-.hero-prog{position:absolute;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--red),#ff4040);box-shadow:0 0 10px var(--red-glow);z-index:50;transition:width .08s}
-
-/* Floating cards */
-.floating-cards{position:absolute;inset:0;pointer-events:none;z-index:15}
-.fcard{position:absolute;opacity:0;background:rgba(255,255,255,.03);border:1px solid var(--glass-border);backdrop-filter:blur(12px);padding:9px 18px;font-size:9px;letter-spacing:3px;color:var(--silver);text-transform:uppercase;white-space:nowrap;transform:translateY(28px);transition:opacity .7s,transform .7s,border-color .3s,box-shadow .3s}
-.fcard.vis{opacity:1;transform:translateY(0)}
-.fcard:hover{border-color:var(--red);box-shadow:0 0 18px var(--red-glow)}
-
-/* Hero center */
-#hero-center{
-  position:absolute;
-  inset:0;
-  z-index:10;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  width:100%;
-  height:100%;
+#hero-scroll{
+  position:relative;
+  height:500vh;
+  background:#f6f2ea;
 }
 
-/* Hero image object — chrome faucet product shot */
-#hero-obj{width:320px;height:320px;position:relative;margin-bottom:50px;animation:objFloat 6s ease-in-out infinite;will-change:transform;filter:drop-shadow(0 40px 80px rgba(196,0,0,.3))}
-#hero-obj img{width:100%;height:100%;object-fit:contain;border-radius:0}
-@keyframes objFloat{0%,100%{transform:translateY(0) rotateY(0deg)}50%{transform:translateY(-16px) rotateY(5deg)}}
+#hero-canvas{
+  position:sticky;
+  top:0;
 
-/* Text sequence */
-.hero-seq{position:absolute;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:0 40px}
-.sf{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;opacity:0;pointer-events:none}
-.sf.active{opacity:1}
-.seq-label{font-size:9px;letter-spacing:6px;color:var(--red);text-transform:uppercase;font-weight:500}
-.seq-hl{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,8vw,118px);line-height:.93;letter-spacing:2px;color:#fff;text-shadow:0 2px 60px rgba(0,0,0,.8)}
-.seq-hl span{color:var(--red)}
-.seq-sub{font-size:12px;letter-spacing:4px;color:var(--silver);text-transform:uppercase;font-weight:300}
+  width:100%;
+  height:100vh;
 
-/* Scroll hint */
-.scroll-hint{position:absolute;bottom:48px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;z-index:30;transition:opacity .4s}
-.scroll-hint-t{font-size:8px;letter-spacing:5px;color:var(--silver);text-transform:uppercase}
-.scroll-line{width:1px;height:56px;background:linear-gradient(var(--red),transparent);animation:sl 2s ease-in-out infinite}
-@keyframes sl{0%{transform:scaleY(0);transform-origin:top;opacity:1}50%{transform:scaleY(1);opacity:1}100%{transform:scaleY(1);opacity:0}}
+  object-fit:cover;
+  display:block;
+}
 
+/* DARK OVERLAY */
+
+.hero-overlay{
+  position:sticky;
+  top:0;
+  height:100vh;
+  margin-top:-100vh;
+  background:
+  linear-gradient(
+    180deg,
+    rgba(0,0,0,.30) 0%,
+    rgba(0,0,0,.18) 35%,
+    rgba(0,0,0,.45) 100%
+  );
+  pointer-events:none;
+  z-index:2;
+}
+
+/* CONTENT */
+
+.hero-content{
+  position:sticky;
+  top:0;
+  height:100vh;
+  margin-top:-100vh;
+  z-index:5;
+  pointer-events:none;
+}
+
+.hero-intro-chip{
+  position:absolute;
+  left:60px;
+  top:32vh;
+  max-width:300px;
+  padding:18px 20px;
+  border-left:2px solid var(--red);
+  background:rgba(0,0,0,.18);
+  backdrop-filter:blur(12px);
+  color:#fff;
+  opacity:.92;
+  transform:translateZ(0);
+}
+
+.hero-intro-chip span{
+  display:block;
+  font-size:10px;
+  letter-spacing:.34em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.72);
+  margin-bottom:10px;
+}
+
+.hero-intro-chip strong{
+  display:block;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:34px;
+  line-height:.95;
+  letter-spacing:.04em;
+  color:#fff;
+}
+
+.product-note{
+  position:absolute;
+  width:260px;
+  padding:18px 18px 16px;
+  border:1px solid rgba(255,255,255,.28);
+  background:rgba(8,8,8,.42);
+  backdrop-filter:blur(18px);
+  color:#fff;
+  box-shadow:0 24px 70px rgba(0,0,0,.24);
+  opacity:0;
+  transform:translateY(24px) scale(.96) rotateX(8deg);
+  transition:opacity .5s ease, transform .5s cubic-bezier(.23,1,.32,1);
+}
+
+.product-note.active{
+  opacity:1;
+  transform:translateY(0) scale(1) rotateX(0deg);
+}
+
+.product-note::before{
+  content:'';
+  position:absolute;
+  width:64px;
+  height:1px;
+  background:rgba(196,0,0,.9);
+  top:28px;
+}
+
+.product-note.left::before{right:-64px}
+.product-note.right::before{left:-64px}
+
+.product-note h3{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:32px;
+  line-height:.95;
+  letter-spacing:.04em;
+  color:#fff;
+  margin-bottom:10px;
+}
+
+.product-note h3 span{color:var(--red)}
+
+.product-note p{
+  font-size:12px;
+  line-height:1.7;
+  color:rgba(255,255,255,.78);
+  margin:0;
+}
+
+.product-pin{
+  position:absolute;
+  width:74px;
+  height:74px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.55);
+  background:rgba(196,0,0,.07);
+  box-shadow:0 0 0 0 rgba(196,0,0,.2), inset 0 0 28px rgba(196,0,0,.16);
+  opacity:0;
+  transform:scale(.65);
+  transition:opacity .45s ease, transform .45s ease;
+}
+
+.product-pin::before{
+  content:'';
+  position:absolute;
+  inset:23px;
+  border-radius:50%;
+  background:var(--red);
+  box-shadow:0 0 22px rgba(196,0,0,.72);
+}
+
+.product-pin::after{
+  content:'';
+  position:absolute;
+  inset:-8px;
+  border-radius:50%;
+  border:1px solid rgba(196,0,0,.38);
+  animation:pinPulse 2.2s ease-out infinite;
+}
+
+.product-pin.active{
+  opacity:1;
+  transform:scale(1);
+}
+
+@keyframes pinPulse{
+  0%{transform:scale(.8);opacity:.8}
+  100%{transform:scale(1.45);opacity:0}
+}
+
+/* note positions */
+.note-faucet{left:7%;top:50%}
+.note-shower{right:8%;top:26%}
+.note-basin{left:8%;bottom:14%}
+.note-bathtub{right:7%;bottom:17%}
+.note-tiles{left:50%;top:16%;transform:translateX(-50%) translateY(24px) scale(.96) rotateX(8deg)}
+.note-tiles.active{transform:translateX(-50%) translateY(0) scale(1) rotateX(0deg)}
+
+.pin-faucet{left:29%;top:58%}
+.pin-shower{right:28%;top:36%}
+.pin-basin{left:33%;bottom:22%}
+.pin-bathtub{right:34%;bottom:25%}
+.pin-tiles{left:50%;top:48%}
+
+.hero-scroll-cue{
+  position:absolute;
+  left:50%;
+  bottom:34px;
+  transform:translateX(-50%);
+  font-size:9px;
+  letter-spacing:.4em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.78);
+}
+
+@media(max-width:900px){
+  .hero-intro-chip{left:22px;top:24vh;max-width:260px}
+  .product-note{width:220px;padding:15px}
+  .product-note h3{font-size:26px}
+  .product-note p{font-size:11px}
+  .note-faucet,.note-basin{left:22px}
+  .note-shower,.note-bathtub{right:22px}
+  .product-pin{width:54px;height:54px}
+  .product-pin::before{inset:17px}
+}
 /* ── CATEGORIES ── */
 #categories{padding:130px 60px;position:relative}
 #categories::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--red),transparent)}
@@ -264,6 +401,249 @@ nav.scrolled{background:rgba(6,6,6,.88);backdrop-filter:blur(22px);padding:16px 
 .why-dot{width:5px;height:5px;border-radius:50%;background:var(--red);flex-shrink:0;margin-top:7px;box-shadow:0 0 8px var(--red-glow)}
 .why-pt-text{font-size:13px;color:var(--silver);line-height:1.75}
 .why-pt-text strong{color:#fff;font-weight:500}
+
+/* ── JOURNEY TIMELINE ── */
+#journey{
+  position:relative;
+  min-height:420vh;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(196,0,0,.05), transparent 30%),
+    radial-gradient(circle at 85% 60%, rgba(0,0,0,.04), transparent 35%),
+    #F6F2EA;
+  overflow:visible;
+  border-top:1px solid rgba(18,18,18,.10);
+}
+
+.journey-sticky{
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow:hidden;
+  padding:120px 60px 70px;
+}
+
+.journey-left{
+  position:absolute;
+  left:60px;
+  top:150px;
+  width:260px;
+  z-index:5;
+}
+
+.journey-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(28px,3.2vw,54px);
+  line-height:1.02;
+  letter-spacing:-1px;
+  font-weight:600;
+  color:#111;
+  margin:18px 0 28px;
+}
+
+.journey-sub{
+  font-size:13px;
+  line-height:1.8;
+  color:rgba(17,17,17,.62);
+  max-width:310px;
+}
+
+.journey-line{
+  position:absolute;
+  left:50%;
+  top:0;
+  bottom:0;
+  width:1px;
+  background:rgba(17,17,17,.14);
+  z-index:2;
+}
+
+.journey-line span{
+  position:absolute;
+  top:0;
+  left:0;
+  width:1px;
+  height:0%;
+  background:var(--red);
+  box-shadow:0 0 18px rgba(196,0,0,.35);
+}
+
+.journey-cards{
+  position:absolute;
+  inset:0;
+  z-index:4;
+  transform-style:preserve-3d;
+  perspective:1400px;
+}
+
+.journey-card{
+  position:absolute;
+  width:560px;
+  min-height:180px;
+  display:grid;
+  grid-template-columns:1fr 1.15fr;
+  overflow:hidden;
+  border-radius:22px;
+  background:linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.72));
+  border:1px solid rgba(255,255,255,.6);
+  backdrop-filter:blur(22px);
+  box-shadow:0 10px 40px rgba(0,0,0,.05), 0 30px 80px rgba(0,0,0,.08);
+  transform-style:preserve-3d;
+  opacity:.18;
+  transform:translateY(80px) scale(.88);
+  transition:opacity .8s cubic-bezier(.23,1,.32,1), transform .8s cubic-bezier(.23,1,.32,1), box-shadow .8s ease, border-color .8s ease;
+  will-change:transform;
+}
+
+.journey-card.active{
+  opacity:1;
+  transform:translateY(0) scale(1);
+  border-color:rgba(196,0,0,.22);
+  box-shadow:0 25px 80px rgba(0,0,0,.10), 0 40px 120px rgba(196,0,0,.12);
+}
+
+.journey-card.prev{
+  opacity:.45;
+  transform:scale(.94) translateY(-20px);
+}
+
+.journey-card.next{
+  opacity:.28;
+  transform:scale(.90) translateY(50px);
+}
+
+.journey-card:hover{
+  transform:translateY(-10px) scale(1.02) rotateX(2deg) rotateY(-2deg);
+  box-shadow:0 40px 120px rgba(196,0,0,.18);
+  z-index:20;
+}
+
+.journey-card img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  min-height:180px;
+  filter:saturate(.92) contrast(1.03);
+  transition:transform 1.2s cubic-bezier(.23,1,.32,1), filter .8s ease;
+}
+
+.journey-card:hover img{
+  transform:scale(1.08);
+  filter:contrast(1.05) saturate(1.05);
+}
+
+.jc-text{
+  padding:26px 28px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.jc-text h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:38px;
+  line-height:1;
+  color:var(--red);
+  margin-bottom:12px;
+  font-weight:600;
+}
+
+.jc-text h4{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;
+  line-height:1.1;
+  color:#111;
+  margin-bottom:12px;
+  font-weight:600;
+}
+.journey-mini-head{
+  position:absolute;
+  top:92px;
+  left:60px;
+
+  font-size:11px;
+  letter-spacing:.32em;
+  text-transform:uppercase;
+
+  color:rgba(17,17,17,.38);
+
+  font-weight:500;
+}
+
+.jc-text p{
+  font-size:13px;
+  line-height:1.65;
+  color:rgba(17,17,17,.62);
+}
+
+.jc-right{
+  right:80px;
+}
+
+.jc-left{
+  left:260px;
+}
+
+.journey-card::before{
+  content:'';
+  position:absolute;
+  top:50%;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:#fff;
+  border:2px solid var(--red);
+  box-shadow:0 0 0 8px rgba(196,0,0,.08),0 0 20px rgba(196,0,0,.28);
+  transform:translateY(-50%);
+}
+
+.jc-right::before{
+  left:-64px;
+}
+
+.jc-left::before{
+  right:-64px;
+}
+
+/* initial positions controlled by JS */
+.journey-card:nth-child(1){top:120px}
+.journey-card:nth-child(2){top:380px}
+.journey-card:nth-child(3){top:640px}
+.journey-card:nth-child(4){top:900px}
+.journey-card:nth-child(5){top:1160px}
+.journey-card:nth-child(6){top:1420px}
+
+@media(max-width:900px){
+  #journey{min-height:auto}
+  .journey-sticky{
+    position:relative;
+    height:auto;
+    padding:80px 22px;
+  }
+  .journey-left{
+    position:relative;
+    left:auto;
+    top:auto;
+    width:100%;
+    margin-bottom:40px;
+  }
+  .journey-line{display:none}
+  .journey-cards{
+    position:relative;
+    inset:auto;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .journey-card{
+    position:relative;
+    width:100%;
+    left:auto!important;
+    right:auto!important;
+    top:auto!important;
+    grid-template-columns:1fr;
+  }
+  .journey-card::before{display:none}
+}
 
 /* ── EXPERIENCE ── */
 #experience{border-top:1px solid var(--glass-border);position:relative;overflow:hidden}
@@ -630,79 +1010,55 @@ footer{
 </nav>
 
 <!-- HERO -->
-<div id="hero-wrap">
-  <div id="hero-sticky">
-    <div class="hero-prog" id="hprog" style="width:0%"></div>
+<section id="hero-scroll">
+  
+  <canvas id="hero-canvas"></canvas>
 
-    <!-- Moody showroom bg image -->
-    <div class="hero-bg-img" id="heroBgImg"></div>
-    <div class="hero-bg-overlay"></div>
-    <div class="hero-bg-overlay2"></div>
-    <div class="hero-grid"></div>
-    <div class="spotlight" id="spotlight"></div>
-    <div class="particles" id="particles"></div>
+  <div class="hero-overlay"></div>
 
-    <div class="c c-tl"></div><div class="c c-tr"></div>
-    <div class="c c-bl"></div><div class="c c-br"></div>
+  <div class="hero-content">
 
-    <!-- Floating category pills -->
-    <div class="floating-cards" id="fcards">
-      <div class="fcard" style="top:20%;left:5%">Jaquar</div>
-      <div class="fcard" style="top:35%;right:7%">Kohler</div>
-      <div class="fcard" style="top:60%;left:6%">TOTO</div>
-      <div class="fcard" style="top:68%;right:8%">Wellness</div>
-      <div class="fcard" style="top:16%;right:20%">Premium Tiles</div>
-      <div class="fcard" style="top:76%;left:20%">UPVC</div>
-      <div class="fcard" style="top:53%;right:5%">Luxury Faucets</div>
+    <div class="hero-intro-chip">
+      <span>Authorized Dealer in Faridabad</span>
+      <strong>Explore Products<br>Through Scroll</strong>
     </div>
 
-    <!-- Center -->
-    <div id="hero-center">
-      <!-- Product image — chrome faucet -->
-      
+    <div class="product-pin pin-faucet" data-product="faucet"></div>
+    <div class="product-pin pin-shower" data-product="shower"></div>
+    <div class="product-pin pin-basin" data-product="basin"></div>
+    <div class="product-pin pin-bathtub" data-product="bathtub"></div>
+    <div class="product-pin pin-tiles" data-product="tiles"></div>
 
-      <!-- Text sequence overlay -->
-      <div class="hero-seq" id="heroSeq">
-        <div class="sf active" data-f="0">
-          <span class="seq-label">Redefining Spaces</span>
-          <div class="seq-hl">Bathrooms Are No Longer<br>Utility Spaces</div>
-        </div>
-        <div class="sf" data-f="1">
-          <span class="seq-label">A New Philosophy</span>
-          <div class="seq-hl">They Are Personal<br><span>Luxury</span> Retreats</div>
-        </div>
-        <div class="sf" data-f="2">
-          <span class="seq-label">The Parnami Promise</span>
-          <div class="seq-hl">Premium Brands.<br>Expert Guidance.</div>
-          <div class="seq-sub">One Destination.</div>
-        </div>
-        <div class="sf" data-f="3">
-          <span class="seq-label">Crafted For You</span>
-          <div class="seq-hl">Designed For<br>Modern <span>Living.</span></div>
-        </div>
-        <div class="sf" data-f="4">
-          <span class="seq-label">Delhi's Finest</span>
-          <div class="seq-hl">Welcome To<br><span>Parnami</span></div>
-          <div class="seq-sub">Sales — Luxury Architectural Experience</div>
-        </div>
-      </div>
-    </div>
+    <article class="product-note note-faucet left" data-product="faucet">
+      <h3><span>02</span> Luxury Faucets</h3>
+      <p>As the tap detail appears, highlight precision flow, chrome finish, premium grip and daily-use durability.</p>
+    </article>
 
-    <!-- Scroll hint -->
-    <div class="scroll-hint" id="scHint">
-      <span class="scroll-hint-t">Scroll</span>
-      <div class="scroll-line"></div>
-    </div>
+    <article class="product-note note-shower right" data-product="shower">
+      <h3><span>03</span> Rain Showers</h3>
+      <p>When the shower frame arrives, show rainfall coverage, smooth water spread and spa-like comfort.</p>
+    </article>
 
-    <div style="position:absolute;left:58px;bottom:90px;z-index:30">
-      <div style="font-size:8px;letter-spacing:5px;color:rgba(184,188,196,.38);text-transform:uppercase">parnamisales.com</div>
-      <div style="font-size:8px;letter-spacing:3px;color:rgba(184,188,196,.28);margin-top:5px">New Delhi, India</div>
-    </div>
-    <div style="position:absolute;right:58px;bottom:90px;z-index:30;writing-mode:vertical-rl;font-size:8px;letter-spacing:5px;color:rgba(184,188,196,.28);text-transform:uppercase">
-      Luxury · Architecture · Wellness
-    </div>
+    <article class="product-note note-basin left" data-product="basin">
+      <h3><span>04</span> Steam & Wellness</h3>
+      <p>As the steam bathroom appears, highlight wellness showers, glass partitions and calming hotel-style ambience.</p>
+    </article>
+
+    <article class="product-note note-bathtub right" data-product="bathtub">
+      <h3><span>05</span> Bath Suites</h3>
+      <p>When the bathtub and full bathroom view appears, show comfort, planning, storage and complete luxury living.</p>
+    </article>
+
+    <article class="product-note note-tiles right" data-product="tiles">
+      <h3><span>01</span> Luxury Bathroom Set</h3>
+      <p>As the hero opens, introduce the complete bathroom environment — vanity, glass, lighting and premium surfaces.</p>
+    </article>
+
+    <div class="hero-scroll-cue">Scroll to reveal</div>
+
   </div>
-</div>
+
+</section>
 
 <!-- CATEGORIES -->
 <section id="categories">
@@ -734,7 +1090,7 @@ footer{
     </div>
     <!-- Faucets -->
     <div class="cat-card reveal d3">
-      <div class="cat-img" style="background-image:url('https://images.unsplash.com/photo-1585704032915-c3400305e979?w=600&q=85&auto=format&fit=crop')"></div>
+      <div class="cat-img" style="background-image:url('l.jpg')"></div>
       <div class="cat-overlay2"></div><div class="cat-overlay"></div>
       <div class="cat-content">
         <div class="cat-tag">Premium</div>
@@ -889,6 +1245,78 @@ footer{
         <li class="why-pt"><div class="why-dot"></div><div class="why-pt-text"><strong>Architect & Designer Preferred</strong> — The go-to destination for Delhi's top interior designers and architectural studios.</div></li>
         <li class="why-pt"><div class="why-dot"></div><div class="why-pt-text"><strong>Immersive Experience Center</strong> — Live installations, working shower demos, and luxury mock-up spaces to touch and experience.</div></li>
       </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Journey -->
+ <section id="journey">
+  <div class="journey-sticky">
+    <div class="journey-left">
+      <span class="lux-line"></span>
+      <div class="sec-label">Our Journey</div>
+      
+      
+    </div>
+
+    <div class="journey-line">
+      <span></span>
+    </div>
+
+    <div class="journey-cards">
+      <div class="journey-card jc-right">
+        <div class="jc-text">
+          <h3>1980</h3>
+          <h4>The Beginning</h4>
+          <p>Started as a premium sanitaryware destination in Faridabad.</p>
+        </div>
+        <img src="journey-1980.jpg" alt="">
+      </div>
+
+      <div class="journey-card jc-left">
+        <img src="journey-1995.jpg" alt="">
+        <div class="jc-text">
+          <h3>1995</h3>
+          <h4>The Era of Premium Bathware</h4>
+          <p>Introduction of designer fittings and modern bathroom concepts.</p>
+        </div>
+      </div>
+
+      <div class="journey-card jc-right">
+        <div class="jc-text">
+          <h3>2005</h3>
+          <h4>Luxury Brands Arrive</h4>
+          <p>Jaquar, Kohler, TOTO and premium international collections.</p>
+        </div>
+        <img src="journey-2005.jpg" alt="">
+      </div>
+
+      <div class="journey-card jc-left">
+        <img src="journey-2015.jpg" alt="">
+        <div class="jc-text">
+          <h3>2015</h3>
+          <h4>Beyond Sanitaryware</h4>
+          <p>Tiles, wellness systems, shower concepts and bathroom planning.</p>
+        </div>
+      </div>
+
+      <div class="journey-card jc-right">
+        <div class="jc-text">
+          <h3>2020</h3>
+          <h4>Bathrooms Become Lifestyle Spaces</h4>
+          <p>Rise of luxury architecture-inspired bathrooms.</p>
+        </div>
+        <img src="journey-2020.jpg" alt="">
+      </div>
+
+      <div class="journey-card jc-left">
+        <img src="journey-today.jpg" alt="">
+        <div class="jc-text">
+          <h3>Today</h3>
+          <h4>One Destination For Luxury Living</h4>
+          <p>Curated bath experiences, premium brands and expert consultation.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1112,129 +1540,232 @@ footer{
 
 <script>
 // ── CURSOR
-const cur=document.getElementById('cur'),curR=document.getElementById('cur-r');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{
-  mx=e.clientX;my=e.clientY;
-  cur.style.left=mx+'px';cur.style.top=my+'px';
+const cur = document.getElementById('cur');
+const curR = document.getElementById('cur-r');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX;
+  my = e.clientY;
+  if(cur){ cur.style.left = mx + 'px'; cur.style.top = my + 'px'; }
 });
+
 (function animR(){
-  rx+=(mx-rx)*.11;ry+=(my-ry)*.11;
-  curR.style.left=rx+'px';curR.style.top=ry+'px';
+  rx += (mx - rx) * .11;
+  ry += (my - ry) * .11;
+  if(curR){ curR.style.left = rx + 'px'; curR.style.top = ry + 'px'; }
   requestAnimationFrame(animR);
 })();
-document.querySelectorAll('a,button,.cat-card,.svc-card,.testi-card,.brand-item,.gallery-item').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cur.style.width='18px';cur.style.height='18px';curR.style.width='52px';curR.style.height='52px';curR.style.borderColor='rgba(196,0,0,.6)'});
-  el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';curR.style.width='34px';curR.style.height='34px';curR.style.borderColor='rgba(184,188,196,.45)'});
+
+document.querySelectorAll('a,button,.cat-card,.svc-card,.testi-card,.brand-item,.gallery-item').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    if(cur){ cur.style.width = '18px'; cur.style.height = '18px'; }
+    if(curR){ curR.style.width = '52px'; curR.style.height = '52px'; curR.style.borderColor = 'rgba(196,0,0,.6)'; }
+  });
+  el.addEventListener('mouseleave', () => {
+    if(cur){ cur.style.width = '10px'; cur.style.height = '10px'; }
+    if(curR){ curR.style.width = '34px'; curR.style.height = '34px'; curR.style.borderColor = 'rgba(184,188,196,.45)'; }
+  });
 });
 
 // ── NAV
-const nav=document.getElementById('nav');
-window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>60),{passive:true});
+const nav = document.getElementById('nav');
+function updateNavState(){
+  if(!nav) return;
+  nav.classList.toggle('scrolled', scrollY > 60);
 
-// ── PARTICLES
-const pc=document.getElementById('particles');
-for(let i=0;i<24;i++){
-  const p=document.createElement('div');p.className='particle';
-  const s=Math.random()*1.8+.8;
-  p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;bottom:0;--drift:${(Math.random()-.5)*110}px;animation-duration:${9+Math.random()*11}s;animation-delay:${-Math.random()*20}s`;
-  pc.appendChild(p);
+  const hero = document.getElementById('hero-scroll');
+  if(hero){
+    const r = hero.getBoundingClientRect();
+    const insideHero = r.top < -40 && r.bottom > window.innerHeight * 0.35;
+    nav.classList.toggle('hero-hide', insideHero);
+  }
+}
+window.addEventListener('scroll', updateNavState, { passive:true });
+updateNavState();
+
+// ── HERO CANVAS SCROLL SEQUENCE
+const frameCount = 150;
+const canvas = document.getElementById('hero-canvas');
+const heroSection = document.getElementById('hero-scroll');
+const context = canvas ? canvas.getContext('2d') : null;
+const images = [];
+let currentFrameIndex = 0;
+let loadedFirstFrame = false;
+
+const currentFrame = index => `frames/frame_${String(index).padStart(4, '0')}.jpg`;
+
+function sizeCanvas(){
+  if(!canvas) return;
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 }
 
-// ── HERO SCROLL
-const heroWrap=document.getElementById('hero-wrap');
-const hprog=document.getElementById('hprog');
-const heroObj=document.getElementById('hero-obj');
-const scHint=document.getElementById('scHint');
-const fcards=document.querySelectorAll('.fcard');
-const frames=document.querySelectorAll('.sf');
-const heroBgImg=document.getElementById('heroBgImg');
+function drawFrame(index){
+  if(!canvas || !context || !images[index]) return;
+  const img = images[index];
+  if(!img.complete || img.naturalWidth === 0) return;
 
-function updateHero(){
-  const rect=heroWrap.getBoundingClientRect();
-  const total=heroWrap.offsetHeight-innerHeight;
-  const scrolled=-rect.top;
-  const p=Math.max(0,Math.min(1,scrolled/total));
+  context.clearRect(0, 0, canvas.width, canvas.height);
 
-  hprog.style.width=(p*100)+'%';
-  scHint.style.opacity=p>.04?0:1;
+  const hRatio = canvas.width / img.width;
+  const vRatio = canvas.height / img.height;
+  const ratio = Math.max(hRatio, vRatio);
+  const centerShiftX = (canvas.width - img.width * ratio) / 2;
+  const centerShiftY = (canvas.height - img.height * ratio) / 2;
 
-  // Text frames
-  const fi=Math.min(frames.length-1,Math.floor(p*frames.length*1.1));
-  frames.forEach((f,i)=>f.classList.toggle('active',i===fi));
+  context.drawImage(
+    img,
+    0,
+    0,
+    img.width,
+    img.height,
+    centerShiftX,
+    centerShiftY,
+    img.width * ratio,
+    img.height * ratio
+  );
+}
 
-  // Object 3D transform
-  const scale=1+p*.32;
-  const rotY=p*14;
-  const rotX=-p*6;
-  if(heroObj){
-    heroObj.style.transform=`scale(${scale}) rotateY(${rotY}deg) rotateX(${rotX}deg)`;
-    heroObj.style.opacity=p>.88?(1-(p-.88)/.12):1;
-  }
+function updateProductHighlights(progress){
+  const stages = [
+    // Matches actual frame sequence:
+    // 0001-0035 full bathroom, 0036-0058 faucet, 0059-0085 rain shower,
+    // 0086-0115 wellness/steam, 0116-0150 bath suite + final showroom.
+    { name:'tiles', start:.00, end:.23 },
+    { name:'faucet', start:.23, end:.39 },
+    { name:'shower', start:.39, end:.57 },
+    { name:'basin', start:.57, end:.77 },
+    { name:'bathtub', start:.77, end:1.01 }
+  ];
 
-  // Bg image parallax — slow zoom + slight move
-  heroBgImg.style.transform=`scale(${1.08+p*.08}) translateY(${p*30}px)`;
-
-  // Floating cards
-  fcards.forEach((c,i)=>{
-    const t=.18+i*.065;
-    c.classList.toggle('vis',p>t&&p<.88);
+  stages.forEach(stage => {
+    const active = progress >= stage.start && progress <= stage.end;
+    document.querySelectorAll(`[data-product="${stage.name}"]`).forEach(el => {
+      el.classList.toggle('active', active);
+    });
   });
 }
-window.addEventListener('scroll',updateHero,{passive:true});
-updateHero();
 
-// ── SPOTLIGHT FOLLOW
-const sp=document.getElementById('spotlight');
-let spx=50,spy=50,tspx=50,tspy=50;
-document.addEventListener('mousemove',e=>{
-  if(scrollY<innerHeight){tspx=e.clientX/innerWidth*100;tspy=e.clientY/innerHeight*100}
-});
-(function animSp(){
-  spx+=(tspx-spx)*.035;spy+=(tspy-spy)*.035;
-  sp.style.left=spx+'%';sp.style.top=spy+'%';
-  requestAnimationFrame(animSp);
-})();
+function updateHeroCanvas(){
+  if(!heroSection || !canvas || !context || !loadedFirstFrame) return;
+
+  const rect = heroSection.getBoundingClientRect();
+  const total = heroSection.offsetHeight - window.innerHeight;
+  const progress = Math.max(0, Math.min(1, -rect.top / total));
+  const frameIndex = Math.min(frameCount - 1, Math.floor(progress * (frameCount - 1)));
+
+  updateProductHighlights(progress);
+
+  if(frameIndex !== currentFrameIndex){
+    currentFrameIndex = frameIndex;
+    requestAnimationFrame(() => drawFrame(currentFrameIndex));
+  }
+}
+
+if(canvas && context){
+  sizeCanvas();
+
+  for(let i = 1; i <= frameCount; i++){
+    const img = new Image();
+    img.src = currentFrame(i);
+    images.push(img);
+  }
+
+  images[0].onload = () => {
+    loadedFirstFrame = true;
+    drawFrame(0);
+    updateHeroCanvas();
+  };
+
+  window.addEventListener('scroll', updateHeroCanvas, { passive:true });
+  window.addEventListener('resize', () => {
+    sizeCanvas();
+    drawFrame(currentFrameIndex);
+  });
+}
 
 // ── REVEAL
-const revEls=document.querySelectorAll('.reveal');
-new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')});
-},{threshold:.1}).observe.bind(new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')});
-},{threshold:.1}));
-
-// simpler approach:
-const ro=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')});
-},{threshold:.1});
-revEls.forEach(e=>ro.observe(e));
+const revEls = document.querySelectorAll('.reveal');
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) e.target.classList.add('vis');
+  });
+}, { threshold:.1 });
+revEls.forEach(e => ro.observe(e));
 
 // ── GALLERY KOHLER-STYLE PINNED HORIZONTAL SCROLL
-const gallery=document.getElementById('gallery');
-const galleryTrack=document.getElementById('galleryTrack');
-const galleryProgress=document.getElementById('galleryProgress');
+const gallery = document.getElementById('gallery');
+const galleryTrack = document.getElementById('galleryTrack');
+const galleryProgress = document.getElementById('galleryProgress');
+
 function updateGalleryMove(){
-  if(!gallery||!galleryTrack)return;
-  const r=gallery.getBoundingClientRect();
-  const maxScroll=gallery.offsetHeight-innerHeight;
-  const progress=Math.max(0,Math.min(1,-r.top/maxScroll));
-  const travel=Math.max(0,galleryTrack.scrollWidth-innerWidth+120);
-  galleryTrack.style.transform=`translateX(${-travel*progress}px)`;
-  if(galleryProgress)galleryProgress.style.width=(progress*100)+'%';
+  if(!gallery || !galleryTrack) return;
+  const r = gallery.getBoundingClientRect();
+  const maxScroll = gallery.offsetHeight - innerHeight;
+  const progress = Math.max(0, Math.min(1, -r.top / maxScroll));
+  const travel = Math.max(0, galleryTrack.scrollWidth - innerWidth + 120);
+  galleryTrack.style.transform = `translateX(${-travel * progress}px)`;
+  if(galleryProgress) galleryProgress.style.width = (progress * 100) + '%';
 }
-window.addEventListener('scroll',updateGalleryMove,{passive:true});
-window.addEventListener('resize',updateGalleryMove);
+window.addEventListener('scroll', updateGalleryMove, { passive:true });
+window.addEventListener('resize', updateGalleryMove);
 updateGalleryMove();
 
 // ── SMOOTH ANCHOR LINKS
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',e=>{
+// Keep anchors smooth, but do not block normal external links.
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
     e.preventDefault();
-    const t=document.querySelector(a.getAttribute('href'));
-    if(t)t.scrollIntoView({behavior:'smooth'});
+    const t = document.querySelector(a.getAttribute('href'));
+    if(t) t.scrollIntoView({ behavior:'smooth' });
   });
 });
+
+// ── JOURNEY YEAR-BY-YEAR POPUP SCROLL
+const journey = document.getElementById('journey');
+const journeyCards = document.querySelectorAll('.journey-card');
+const journeyLine = document.querySelector('.journey-line span');
+
+function updateJourney(){
+  if(!journey || !journeyCards.length) return;
+
+  const rect = journey.getBoundingClientRect();
+  const total = journey.offsetHeight - innerHeight;
+  const progress = Math.max(0, Math.min(1, -rect.top / total));
+
+  if(journeyLine){
+    journeyLine.style.height = `${progress * 100}%`;
+  }
+
+  const activeIndex = Math.min(
+    journeyCards.length - 1,
+    Math.floor(progress * journeyCards.length)
+  );
+
+  journeyCards.forEach((card, i) => {
+    card.classList.remove('active', 'prev', 'next');
+
+    if(i === activeIndex){
+      card.classList.add('active');
+    } else if(i < activeIndex){
+      card.classList.add('prev');
+    } else {
+      card.classList.add('next');
+    }
+
+    const base = i * 255 + 130;
+    const move = progress * 980;
+    const y = base - move;
+
+    card.style.top = `${y}px`;
+  });
+}
+
+window.addEventListener('scroll', updateJourney, { passive:true });
+window.addEventListener('resize', updateJourney);
+updateJourney();
+
 </script>
 </body>
 </html>
