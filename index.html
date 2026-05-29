@@ -57,7 +57,7 @@ nav.hero-hide{transform:translateY(-120%);opacity:0;pointer-events:none}
 .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.23,1,.32,1)}
 .nav-links a:hover{color:#fff}
 .nav-links a:hover::after{transform:scaleX(1)}
-.nav-cta{background:transparent;border:1px solid var(--red);color:var(--red);padding:11px 26px;font-size:9px;letter-spacing:4px;text-transform:uppercase;cursor:none;transition:all .32s;font-family:'Inter',sans-serif}
+.nav-cta{background:transparent;border:1px solid var(--red);text-decoration:none;display:inline-flex;align-items:center;justify-content:center;color:var(--red);padding:11px 26px;font-size:9px;letter-spacing:4px;text-transform:uppercase;cursor:none;transition:all .32s;font-family:'Inter',sans-serif}
 .nav-cta:hover{background:var(--red);color:#fff;box-shadow:0 0 28px var(--red-glow)}
 
 /* ───────── HERO SCROLL CANVAS ───────── */
@@ -1039,7 +1039,7 @@ footer{
     <li><a href="#experience">Experience</a></li>
     <li><a href="#services">Services</a></li>
   </ul>
-  <button class="nav-cta">Book Consultation</button>
+  <a class="nav-cta" href="tel:+919818185882">Book Consultation</a>
 </nav>
 
 <!-- HERO -->
@@ -1212,7 +1212,7 @@ footer{
       <div class="showcase-tag">Architectural Design</div>
       <div class="showcase-title">Spaces That<br>Transcend the<br>Ordinary</div>
       <div class="showcase-text">We believe bathrooms are the most personal spaces in a home. That's why we curate collections that marry form, function, and luxury — from freestanding bathtubs to smart showers and handcrafted fixtures.</div>
-      <a href="https://parnamisales.com/" class="btn-lux">Explore Collection</a>
+      <a  href="#categories" class="btn-lux">Explore Collection</a>
     </div>
   </div>
 
@@ -1227,7 +1227,7 @@ footer{
       <div class="showcase-tag">Surface Excellence</div>
       <div class="showcase-title">Tiles That<br>Define Space<br>& Character</div>
       <div class="showcase-text">From Italian marble-look porcelain to Japanese ceramic art, our tile collections transform surfaces into statements. Large format, bespoke designs for floors, walls, and facades.</div>
-      <a href="https://parnamisales.com/" class="btn-lux">View Tiles</a>
+      <a href="#gallery" class="btn-lux">View Tiles</a>
     </div>
   </div>
 
@@ -1242,7 +1242,7 @@ footer{
       <div class="showcase-tag">Wellness</div>
       <div class="showcase-title">Showers<br>Reimagined<br>For Life</div>
       <div class="showcase-text">Rain showers, steam cabins, and chromotherapy systems — we bring the five-star spa experience directly into your private sanctuary. Precision-engineered wellness, delivered.</div>
-      <a href="https://parnamisales.com/" class="btn-lux">Wellness Range</a>
+      <a href="#services" class="btn-lux">Wellness Range</a>
     </div>
   </div>
 </section>
@@ -1373,7 +1373,7 @@ footer{
         <div class="exp-feat"><div class="exp-line"></div>Designer Consultation Suite</div>
         <div class="exp-feat"><div class="exp-line"></div>Material & Finish Library</div>
       </div>
-      <a href="https://parnamisales.com/" class="btn-lux">Plan Your Visit</a>
+      <a href="#footer-contact" class="btn-lux">Plan Your Visit</a>
     </div>
   </div>
 </section>
@@ -1517,13 +1517,13 @@ footer{
       <div class="footer-desc">Delhi's premier destination for luxury sanitaryware, premium tiles, wellness solutions, and architectural products. Where design meets distinction.</div>
       <div class="footer-social">
 
-  <a href="https://facebook.com/" class="soc-btn" target="_blank">
+  <a href="https://www.facebook.com/parnamisalesfbd/" class="soc-btn" target="_blank">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
       <path d="M15 8h-2a2 2 0 0 0-2 2v2H9v3h2v5h3v-5h2.2l.8-3H14v-1.5c0-.6.2-1 1-1H17V8h-2z"/>
     </svg>
   </a>
 
-  <a href="https://instagram.com/" class="soc-btn" target="_blank">
+  <a href="https://www.instagram.com/parnamibath/" class="soc-btn" target="_blank">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
       <rect x="3" y="3" width="18" height="18" rx="5"/>
       <circle cx="12" cy="12" r="4"/>
@@ -1531,7 +1531,7 @@ footer{
     </svg>
   </a>
 
-  <a href="https://linkedin.com/" class="soc-btn" target="_blank">
+  <a href="https://in.linkedin.com/company/parnami-sales-corporation" class="soc-btn" target="_blank">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
       <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-12h4v2"/>
       <rect x="2" y="9" width="4" height="12"/>
@@ -1539,7 +1539,7 @@ footer{
     </svg>
   </a>
 
-  <a href="https://youtube.com/" class="soc-btn" target="_blank">
+  <a href="https://www.youtube.com/watch?v=tymKxZ0_AN4" class="soc-btn" target="_blank">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
       <path d="M22 12s0-4-1-5-5-1-9-1-8 0-9 1-1 5-1 5 0 4 1 5 5 1 9 1 8 0 9-1 1-5 1-5z"/>
       <polygon points="10 9 16 12 10 15 10 9"/>
@@ -1551,33 +1551,33 @@ footer{
     <div class="reveal d1">
       <div class="fc-title">Collections</div>
       <ul class="fc-links">
-        <li><a href="#">Sanitaryware</a></li>
-        <li><a href="#">Luxury Faucets</a></li>
-        <li><a href="#">Premium Tiles</a></li>
-        <li><a href="#">Wellness</a></li>
-        <li><a href="#">UPVC Systems</a></li>
-        <li><a href="#">Accessories</a></li>
+        <li><a href="#categories">Sanitaryware</a></li>
+        <li><a href="#categories">Luxury Faucets</a></li>
+        <li><a href="#gallery">Premium Tiles</a></li>
+        <li><a href="#showcase">Wellness</a></li>
+        <li><a href="#categories">UPVC Systems</a></li>
+        <li><a href="#services">Accessories</a></li>
       </ul>
     </div>
     <div class="reveal d2">
       <div class="fc-title">Brands</div>
       <ul class="fc-links">
-        <li><a href="#">Jaquar</a></li>
-        <li><a href="#">Kohler</a></li>
-        <li><a href="#">TOTO</a></li>
-        <li><a href="#">Grohe</a></li>
-        <li><a href="#">Hansgrohe</a></li>
-        <li><a href="#">Roca</a></li>
+        <li><a href="#brands">Jaquar</a></li>
+        <li><a href="#brands">Kohler</a></li>
+        <li><a href="#brands">TOTO</a></li>
+        <li><a href="#brands">Grohe</a></li>
+        <li><a href="#brands">Hansgrohe</a></li>
+        <li><a href="#brands">Roca</a></li>
       </ul>
     </div>
-    <div class="reveal d3">
+    <div class="reveal d3" id="footer-contact">
       <div class="fc-title">Contact</div>
       <ul class="fc-links">
-        <li><a href="https://parnamisales.com/">parnamisales.com</a></li>
-        <li><a href="#">New Delhi, India</a></li>
-        <li><a href="#">Book a Visit</a></li>
-        <li><a href="#">Design Consultation</a></li>
-        <li><a href="#">Trade Enquiries</a></li>
+        <li><a href="#hero-scroll">parnamisales.com</a></li>
+        <li><a href="tel:+919818185882">+91 98181 85882</a></li>
+        <li><a href="mailto:info@parnamisales.com">info@parnamisales.com</a></li>
+        <li><a href="https://www.google.com/maps/search/?api=1&query=Shop%20No.%204%20%26%205%2C%20New%20Tikona%20Park%2C%20NIT%2C%20Faridabad%20121001%2C%20Haryana%2C%20India" target="_blank" rel="noopener noreferrer">Shop No. 4&5, New Tikona Park, NIT, Faridabad - 121001</a></li>
+        <li><a href="tel:+919818185882">Book a Visit / Design Consultation</a></li>
       </ul>
     </div>
   </div>
