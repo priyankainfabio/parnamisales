@@ -825,7 +825,40 @@ footer{background:var(--graphite);border-top:1px solid var(--glass-border);paddi
 .site-credit-inner a:hover{opacity:1}
 .site-credit-inner img{height:12px;width:auto;display:block}
 .site-credit-divider{width:1px;height:12px;background:rgba(255,255,255,.30);display:block}
+.soc-btn{
+  width:42px;
+  height:42px;
 
+  border:1px solid rgba(18,18,18,.12);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  color:#333;
+  text-decoration:none;
+
+  transition:all .35s ease;
+  cursor:none;
+
+  background:rgba(255,255,255,.55);
+  backdrop-filter:blur(10px);
+}
+
+.soc-btn svg{
+  width:16px;
+  height:16px;
+}
+
+.soc-btn:hover{
+  border-color:var(--red);
+  color:var(--red);
+
+  transform:translateY(-4px);
+
+  box-shadow:
+    0 10px 30px rgba(196,0,0,.12),
+    0 0 12px rgba(196,0,0,.08);
+}
 /* REVEAL */
 .reveal{opacity:0;transform:translateY(44px);transition:opacity .9s cubic-bezier(.23,1,.32,1),transform .9s cubic-bezier(.23,1,.32,1)}
 .reveal.vis{opacity:1;transform:translateY(0)}
@@ -1483,11 +1516,37 @@ footer{
       <div class="footer-tagline">Luxury Architectural Experience</div>
       <div class="footer-desc">Delhi's premier destination for luxury sanitaryware, premium tiles, wellness solutions, and architectural products. Where design meets distinction.</div>
       <div class="footer-social">
-        <a href="https://parnamisales.com/" class="soc-btn">in</a>
-        <a href="https://parnamisales.com/" class="soc-btn">ig</a>
-        <a href="https://parnamisales.com/" class="soc-btn">fb</a>
-        <a href="https://parnamisales.com/" class="soc-btn">yt</a>
-      </div>
+
+  <a href="https://facebook.com/" class="soc-btn" target="_blank">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+      <path d="M15 8h-2a2 2 0 0 0-2 2v2H9v3h2v5h3v-5h2.2l.8-3H14v-1.5c0-.6.2-1 1-1H17V8h-2z"/>
+    </svg>
+  </a>
+
+  <a href="https://instagram.com/" class="soc-btn" target="_blank">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+      <rect x="3" y="3" width="18" height="18" rx="5"/>
+      <circle cx="12" cy="12" r="4"/>
+      <circle cx="17.5" cy="6.5" r="1"/>
+    </svg>
+  </a>
+
+  <a href="https://linkedin.com/" class="soc-btn" target="_blank">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-12h4v2"/>
+      <rect x="2" y="9" width="4" height="12"/>
+      <circle cx="4" cy="4" r="2"/>
+    </svg>
+  </a>
+
+  <a href="https://youtube.com/" class="soc-btn" target="_blank">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+      <path d="M22 12s0-4-1-5-5-1-9-1-8 0-9 1-1 5-1 5 0 4 1 5 5 1 9 1 8 0 9-1 1-5 1-5z"/>
+      <polygon points="10 9 16 12 10 15 10 9"/>
+    </svg>
+  </a>
+
+</div>
     </div>
     <div class="reveal d1">
       <div class="fc-title">Collections</div>
